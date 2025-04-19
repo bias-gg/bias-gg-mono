@@ -1,6 +1,9 @@
 import { Elysia } from "elysia";
 import { setupRoutes } from "./routes/index";
 
+// Enable HMR
+import.meta.hot.accept();
+
 const app = new Elysia();
 
 setupRoutes(app);
