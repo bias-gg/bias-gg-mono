@@ -1,3 +1,4 @@
+import { Card } from "@repo/types/cards/CardType";
 
 const DEMO_CARDS = [
   {
@@ -31,7 +32,7 @@ const DEMO_CARDS = [
 ];
 
 export const CardsController = {
-  getHottest() {
+  getHottest(): Card[] {
     return DEMO_CARDS;
   },
 
