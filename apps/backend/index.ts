@@ -1,10 +1,13 @@
 import { Elysia } from "elysia";
 import { setupRoutes } from "./routes/index";
-
-// Enable HMR
-import.meta.hot.accept();
+import cors from "@elysiajs/cors";
 
 const app = new Elysia();
+
+// cors
+app.use(cors({
+  origin: true,
+}));
 
 setupRoutes(app);
 

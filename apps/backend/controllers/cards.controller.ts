@@ -1,4 +1,4 @@
-import { Card } from "@repo/types/cards/CardType";
+import type { Card } from "@repo/types/cards/CardType.ts";
 
 const DEMO_CARDS = [
   {
@@ -7,7 +7,8 @@ const DEMO_CARDS = [
     name: "Jungkook",
     group: "BTS",
     album: "Proof",
-    price: "$25.00",
+    description: "Jungkook is the maknae of BTS",
+    price: 245,
     likes: 10,
   },
   {
@@ -16,7 +17,8 @@ const DEMO_CARDS = [
     name: "Jennie",
     group: "BLACKPINK",
     album: "Born Pink",
-    price: "$30.00",
+    description: "Jennie is from the group Blackpink",
+    price: 40,
     likes: 20,
   },
   {
@@ -25,7 +27,8 @@ const DEMO_CARDS = [
     name: "Nayeon",
     group: "TWICE",
     album: "IM NAYEON",
-    price: "$20.00",
+    description: "Nayeon is the main singer of TWICE",
+    price: 35,
     likes: 30,
   },
   // Add more demo cards here

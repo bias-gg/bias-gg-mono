@@ -3,16 +3,13 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Card as CardType } from "@repo/types/cards/CardType.ts";
 
 interface PhotocardProps {
-  imageUrl: string;
-  name: string;
-  group: string;
-  price?: string;
-  album: string;
+  card: CardType;
 }
 
-export function Photocard({ imageUrl, name, group, price, album }: PhotocardProps) {
+export function Photocard({ card: { name, imageUrl, group, album, price }, }: PhotocardProps) {
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
       <CardContent className="p-0">

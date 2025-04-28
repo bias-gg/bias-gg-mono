@@ -22,7 +22,8 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "elysia": "^1.2.25",
-    "@repo/types": "*"
+    "@elysiajs/cors": "^1.2.0",
+    "@repo/types": "*",
+    "elysia": "^1.2.25"
   }
 }

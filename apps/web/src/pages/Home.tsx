@@ -1,39 +1,29 @@
 import { CardGrid } from "@/components/ui/card-grid";
 import { Photocard } from "@/components/photocard";
 import { StandardLayout } from "@/components/layouts/Standard";
-
-const DEMO_CARDS = [
-  {
-    imageUrl: "https://placehold.co/300x400",
-    name: "Jungkook",
-    group: "BTS",
-    album: "Proof",
-    price: "$25.00"
-  },
-  {
-    imageUrl: "https://placehold.co/300x400",
-    name: "Jennie",
-    group: "BLACKPINK",
-    album: "Born Pink",
-    price: "$30.00"
-  },
-  {
-    imageUrl: "https://placehold.co/300x400",
-    name: "Nayeon",
-    group: "TWICE",
-    album: "IM NAYEON",
-    price: "$20.00"
-  },
-  // Add more demo cards here
-];
+import { useQuery } from "@tanstack/react-query";
+import { Card } from "@repo/types/cards/CardType.js";
 
 const Home = () => {
+  const data = useQuery<Card[]>({
+    queryKey: ['hottestcards'],
+    queryFn: () => fetch('http://localhost:3000/cards').then((res) => res.json()),
+  });
+
+  if (data.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (data.isError) {
+    return <div>Error: {data.error.message}</div>;
+  }
+
   return (
     <StandardLayout>
       <h2 className="text-2xl font-bold mb-6">Featured Photocards</h2>
       <CardGrid>
-        {DEMO_CARDS.map((card, index) => (
-          <Photocard key={index} {...card} />
+        {data.data.map((card) => (
+          <Photocard key={card.id} card={card} />
         ))}
       </CardGrid>
     </StandardLayout>

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./types/*": "./src/types/**/*.ts"
+    "./*": "./src/*"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
