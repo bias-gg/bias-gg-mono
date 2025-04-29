@@ -10,7 +10,7 @@ type ResultType = {
 export const useHottestCards = (): Result<ResultType, Error> => {
   const { data, isPending, error } = useQuery<Card[]>({
     queryKey: ['hottestcards'],
-    queryFn: () => fetch('http://localhost:3000/cards').then((res) => res.json()),
+    queryFn: () => fetch('http://localhost:3000/cards/hottest').then((res) => res.json()),
   });
 
   if (error) {
