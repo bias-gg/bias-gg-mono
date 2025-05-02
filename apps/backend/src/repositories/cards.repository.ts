@@ -1,6 +1,7 @@
-import type { Card } from "@repo/types/cards/CardType.ts";
+import type { Card } from "@repo/types/cards/CardType.js";
+import type { Pagination } from "../types/pagination";
 
-const DEMO_CARDS = [
+const DEMO_CARDS: Card[] = [
   {
     id: "1",
     imageUrl: "https://placehold.co/300x400",
@@ -34,12 +35,12 @@ const DEMO_CARDS = [
   // Add more demo cards here
 ];
 
-export const CardsController = {
-  getHottest(): Card[] {
-    return DEMO_CARDS;
+export const CardsRepository = {
+  getHottest: (pagination: Pagination): Card[] => {
+    return DEMO_CARDS.slice((pagination.page - 1) * pagination.limit, pagination.page * pagination.limit);
   },
 
-  getCardById(id: string) {
+  getCardById: (id: string): Card | undefined => {
     return DEMO_CARDS.find((card) => card.id === id);
   },
 };
