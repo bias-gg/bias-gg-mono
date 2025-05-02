@@ -6,7 +6,7 @@ export const CardSchema = z
   .object({
     title: z.string().nonempty(),
     description: z.string().optional(),
-    price: z.number().nonnegative(),
+    price: z.number().nonnegative().min(0),
     likes: z.number().nonnegative(),
   })
   .extend(idSchema)

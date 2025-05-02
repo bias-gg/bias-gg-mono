@@ -7,7 +7,7 @@ import { Card } from "@repo/types/cards/CardType.js";
 const Home = () => {
   const data = useQuery<Card[]>({
     queryKey: ['hottestcards'],
-    queryFn: () => fetch('http://localhost:3000/cards').then((res) => res.json()),
+    queryFn: () => fetch('http://localhost:3000/cards/hottest').then((res) => res.json()),
   });
 
   if (data.isLoading) {

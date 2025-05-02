@@ -3,8 +3,8 @@ import { CardsService } from "../services/cards.service";
 
 
 export const CardsController = {
-  getHottest(pagination: Pagination) {
-    return CardsService.getHottest(pagination);
+  getHottest() {
+    return CardsService.getHottest();
   },
 
   getCardById(id: string) {
