@@ -1,0 +1,24 @@
+# Use postgres/example user/password credentials
+volumes:
+  bias-data:
+services:
+  db:
+    container_name: bias-db
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    shm_size: 1gb
+    volumes:
+      - bias-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: biasgg
+      POSTGRES_DB: biasgg-dev
+      POSTGRES_PASSWORD: Passw0rd! 
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
