@@ -1,4 +1,4 @@
-import type { Pagination } from "../types/pagination";
+import type { User } from "elysia-clerk";
 import { CardsService } from "../services/cards.service";
 
 
@@ -7,7 +7,11 @@ export const CardsController = {
     return CardsService.getHottest();
   },
 
-  getCardById(id: string) {
+  getCardById(id: number) {
     return CardsService.getCardById(id);
+  },
+
+  getCardsByUser(user: User) {
+    return CardsService.getCardsByUser(user);
   },
 };

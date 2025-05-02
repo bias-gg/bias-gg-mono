@@ -2,6 +2,7 @@ import { CardSchema, type Card } from "@repo/types/cards/CardType.ts";
 import { db } from "../db/client";
 import { cards } from "../db/schema";
 import { eq, desc } from "drizzle-orm";
+import type { User } from "elysia-clerk";
 
 export const CardsRepository = {
   getHottest: async (): Promise<Card[]> => {
@@ -22,5 +23,13 @@ export const CardsRepository = {
       .limit(1);
 
     return cardFromDb.length > 0 ? CardSchema.parse(cardFromDb[0]) : undefined;
+  },
+
+  getCardsByUser: async (user: User): Promise<Card[]> => {
+    // TODO: Actually make this work
+    console.log("Current user", user);
+    const cardsFromDb = await db.select().from(cards).limit(10);
+
+    return cardsFromDb.map((card) => CardSchema.parse(card));
   },
 };
