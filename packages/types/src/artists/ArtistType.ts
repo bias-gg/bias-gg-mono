@@ -3,9 +3,8 @@ import * as z from "zod";
 
 export const ArtistSchema = z
   .object({
-    id: z.string().nonempty(),
+    id: z.number().nonnegative().min(1),
     name: z.string().nonempty(),
-    followers: z.number().nonnegative(),
   })
   .extend(creatableSchema);
 
