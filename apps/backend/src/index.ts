@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import { setupRoutes } from "./routes/index";
 import cors from "@elysiajs/cors";
-import { scaffoldTheDatabase } from "./data/scaffold";
+import { drizzle } from "drizzle-orm/node-postgres";
 
 // #region HTTP SERVER
 
@@ -20,7 +20,7 @@ setupRoutes(app);
 
 // #region DATABASE
 
-await scaffoldTheDatabase();
+const db = drizzle(process.env.DATABASE_URL!);
 
 // #endregion DATABASE
 
