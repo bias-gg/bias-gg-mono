@@ -1,4 +1,4 @@
-import { ArtistSchema, type Artist } from "@repo/types/artists/ArtistType.js";
+import { ArtistSchema, type Artist } from "@repo/types/artists/ArtistType.ts";
 import type { Pagination } from "../types/pagination";
 import { db } from "../db/client";
 import { artists } from "../db/schema";
