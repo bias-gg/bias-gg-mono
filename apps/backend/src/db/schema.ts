@@ -1,27 +1,41 @@
 import { relations } from "drizzle-orm";
 import {
-  pgTable,
   integer,
   varchar,
   primaryKey,
   boolean,
+  pgSchema,
 } from "drizzle-orm/pg-core";
+import { creatable } from "./schemaHelpers/creatableSchema";
 
-export const cards = pgTable("cards", {
+export const appSchema = pgSchema("app");
+
+// Define base tables first
+export const cards = appSchema.table("cards", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  album: varchar({ length: 255 }).notNull(),
+  title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }),
   price: integer().notNull(),
   likes: integer().default(0),
+  ...creatable,
 });
 
-export const cardRelations = relations(cards, ({ many }) => ({
-  groupsToCards: many(groupsToCards),
-  artistsToCards: many(artistsToCards),
-}));
+export const groups = appSchema.table("groups", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  ...creatable,
+});
 
-export const groupsToCards = pgTable(
+export const artists = appSchema.table("artists", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  isSoloArtist: boolean().default(false),
+  imageUrl: varchar({ length: 255 }).notNull(),
+  ...creatable,
+});
+
+// Define junction tables
+export const groupsToCards = appSchema.table(
   "groups_to_cards",
   {
     groupId: integer()
@@ -34,18 +48,7 @@ export const groupsToCards = pgTable(
   (t) => [primaryKey({ columns: [t.groupId, t.cardId] })],
 );
 
-export const groupsToCardsRelations = relations(groupsToCards, ({ one }) => ({
-  group: one(groups, {
-    fields: [groupsToCards.groupId],
-    references: [groups.id],
-  }),
-  card: one(cards, {
-    fields: [groupsToCards.cardId],
-    references: [cards.id],
-  }),
-}));
-
-export const artistsToCards = pgTable(
+export const artistsToCards = appSchema.table(
   "artists_to_cards",
   {
     artistId: integer()
@@ -58,40 +61,7 @@ export const artistsToCards = pgTable(
   (t) => [primaryKey({ columns: [t.artistId, t.cardId] })],
 );
 
-export const artistsToCardsRelations = relations(artistsToCards, ({ one }) => ({
-  artist: one(artists, {
-    fields: [artistsToCards.artistId],
-    references: [artists.id],
-  }),
-  card: one(cards, {
-    fields: [artistsToCards.cardId],
-    references: [cards.id],
-  }),
-}));
-
-export const groups = pgTable("groups", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-});
-
-export const groupRelations = relations(groups, ({ many }) => ({
-  groupsToCards: many(groupsToCards),
-  groupsToArtists: many(groupsToArtists),
-}));
-
-export const artists = pgTable("artists", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  isSoloArtist: boolean().default(false),
-  imageUrl: varchar({ length: 255 }).notNull(),
-});
-
-export const artistRelations = relations(artists, ({ many }) => ({
-  artistsToCards: many(artistsToCards),
-  groupsToArtists: many(groupsToArtists),
-}));
-
-export const groupsToArtists = pgTable(
+export const groupsToArtists = appSchema.table(
   "groups_to_artists",
   {
     groupId: integer()
@@ -103,6 +73,47 @@ export const groupsToArtists = pgTable(
   },
   (t) => [primaryKey({ columns: [t.groupId, t.artistId] })],
 );
+
+// Define relations for cards
+export const cardRelations = relations(cards, ({ many }) => ({
+  groupsToCards: many(groupsToCards),
+  artistsToCards: many(artistsToCards),
+}));
+
+// Define relations for groups
+export const groupRelations = relations(groups, ({ many }) => ({
+  groupsToCards: many(groupsToCards),
+  groupsToArtists: many(groupsToArtists),
+}));
+
+// Define relations for artists
+export const artistRelations = relations(artists, ({ many }) => ({
+  artistsToCards: many(artistsToCards),
+  groupsToArtists: many(groupsToArtists),
+}));
+
+// Define relations for junction tables
+export const groupsToCardsRelations = relations(groupsToCards, ({ one }) => ({
+  group: one(groups, {
+    fields: [groupsToCards.groupId],
+    references: [groups.id],
+  }),
+  card: one(cards, {
+    fields: [groupsToCards.cardId],
+    references: [cards.id],
+  }),
+}));
+
+export const artistsToCardsRelations = relations(artistsToCards, ({ one }) => ({
+  artist: one(artists, {
+    fields: [artistsToCards.artistId],
+    references: [artists.id],
+  }),
+  card: one(cards, {
+    fields: [artistsToCards.cardId],
+    references: [cards.id],
+  }),
+}));
 
 export const groupsToArtistsRelations = relations(
   groupsToArtists,
