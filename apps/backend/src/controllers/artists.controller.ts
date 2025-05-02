@@ -6,7 +6,7 @@ export const ArtistsController = {
     return ArtistsService.getArtists(pagination);
   },
 
-  getArtistById(id: string) {
+  getArtistById(id: number) {
     return ArtistsService.getArtistById(id);
   },
 };

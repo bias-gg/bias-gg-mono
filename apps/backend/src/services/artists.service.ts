@@ -7,7 +7,7 @@ export const ArtistsService = {
     return ArtistsRepository.getArtists(pagination);
   },
 
-  getArtistById(id: string) {
+  getArtistById(id: number) {
     return ArtistsRepository.getArtistById(id);
   },
 };

@@ -1,12 +1,19 @@
-
 import { t, Elysia } from "elysia";
 import { ArtistsController } from "../controllers/artists.controller";
+import { idAsNumberValidator, paginationValidator } from "./utils/validation";
 
 export const artistRoutes = new Elysia({ prefix: "/artists" })
-  .get("/", ({ query }) => ArtistsController.list(query.page, query.limit), {
-    query: t.Object({
-      page: t.Number({ default: 1, minimum: 1 }),
-      limit: t.Number({ default: 10, minimum: 1, maximum: 100 }),
+  .get(
+    "/",
+    ({ query: { page, limit } }) => ArtistsController.list({ page, limit }),
+    {
+      query: t.Object({
+        ...paginationValidator,
+      }),
+    },
+  )
+  .get("/:id", ({ params }) => ArtistsController.getArtistById(params.id), {
+    params: t.Object({
+      ...idAsNumberValidator,
     }),
-  })
-  .get("/:id", ({ params }) => ArtistsController.getArtistById(params.id));
+  });
