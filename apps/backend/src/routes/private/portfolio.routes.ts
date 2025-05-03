@@ -1,4 +1,3 @@
-
 import Elysia from "elysia";
 import { authMiddleware } from "../../middleware/auth";
 import { CardsController } from "../../controllers/cards.controller";
