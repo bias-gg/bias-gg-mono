@@ -1,23 +1,23 @@
 import Elysia, { t } from "elysia";
-import { GroupsController } from "../controllers/groups.controller";
 import { idAsNumberValidator, paginationValidator } from "./utils/validation";
+import { GroupsRepository } from "../repositories/groups.repository";
 
 export const groupRoutes = new Elysia({ prefix: "/groups" })
   .get(
     "/",
-    ({ query: { page, limit } }) => GroupsController.getGroups({ page, limit }),
+    ({ query: { page, limit } }) => GroupsRepository.getGroups({ page, limit }),
     {
       query: t.Object({
         ...paginationValidator,
       }),
     },
   )
-  .get("/:id", ({ params }) => GroupsController.getGroupById(params.id), {
+  .get("/:id", ({ params }) => GroupsRepository.getGroupById(params.id), {
     params: t.Object({
       ...idAsNumberValidator,
     }),
   })
-  .get("name/:name", ({ params }) => GroupsController.getGroupByName(params.name), {
+  .get("name/:name", ({ params }) => GroupsRepository.getGroupByName(params.name), {
     params: t.Object({
       name: t.String(),
     }),

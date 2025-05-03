@@ -1,10 +1,10 @@
 import Elysia, { t } from "elysia";
-import { CardsController } from "../controllers/cards.controller";
 import { idAsNumberValidator } from "./utils/validation";
+import { CardsRepository } from "../repositories/cards.repository";
 
 export const cardRoutes = new Elysia({ prefix: "/cards" })
-  .get("/hottest", () => CardsController.getHottest())
-  .get("/:id", ({ params }) => CardsController.getCardById(params.id), {
+  .get("/hottest", () => CardsRepository.getHottest())
+  .get("/:id", ({ params }) => CardsRepository.getCardById(params.id), {
     params: t.Object({
       ...idAsNumberValidator,
     }),
