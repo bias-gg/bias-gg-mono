@@ -20,6 +20,7 @@ type GroupType = {
 export function Sidebar() {
   const { isOpen, setIsOpen } = useSidebar();
 
+  // TODO: replace with real data of the current user's favorited groups
   const groups: GroupType[] = [
     {
       name: "BTS",
@@ -76,11 +77,11 @@ export function Sidebar() {
               My Collection
             </LinkButton>
             <LinkButton
-              link="/trade"
+              link="/groups"
               variant="ghost"
               className="w-full justify-start"
             >
-              Trades
+              All Groups 
             </LinkButton>
             {groups.map(({name, id}) => (
               <LinkButton

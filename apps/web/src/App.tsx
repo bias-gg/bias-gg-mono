@@ -9,6 +9,7 @@ import Trade from "@/pages/Trade";
 import TradeArtist from "./pages/TradeArtist";
 import Admin from "./pages/Admin";
 import { AdminProvider } from "./contexts/AdminContext";
+import Groups from "./pages/Groups";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/trade" element={<Trade />} />
           <Route path="/trade/:artistId" element={<TradeArtist />} />
+          <Route path="/groups" element={<Groups />} />
 
           {/* Admin Routes */}
           <Route path="/admin" element={<Admin />} />
