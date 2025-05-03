@@ -11,7 +11,7 @@ export const TooltipButton = ({
 }: TooltipButtonProps) => {
   return (
     <Tooltip delayDuration={50}>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Button {...props} />
       </TooltipTrigger>
       <TooltipContent sideOffset={5}>{toolbarText}</TooltipContent>
