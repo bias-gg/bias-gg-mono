@@ -4,7 +4,9 @@ import { Group } from "@repo/types/groups/GroupType.js";
 import { useMembersForGroup } from "@/hooks/api/members/useMembersForGroup";
 import { Artist } from "@repo/types/artists/ArtistType.ts";
 import { Button } from "@/components/ui/button";
-import { Check, Trash } from "lucide-react";
+import { Check, Plus, Trash } from "lucide-react";
+import { TooltipButton } from "@/components/ui/tooltip-button";
+import { GroupMemberForm } from "./GroupMemberForm";
 
 type GroupManagementProps = {
   group: Group;
@@ -25,11 +27,34 @@ export const GroupManagement = ({
     return null;
   }
 
+  const onGroupEditSubmit = (e) => {
+    e.preventDefault();
+    console.log("Edited group", e);
+  };
+
+  const onMemberAddClick = (e) => {
+    e.preventDefault();
+    console.log("Added member", e);
+  };
+
+  const onMemberDeleteClick = (memberId) => {
+    console.log("Deleted member", memberId);
+  };
+
+  const onMemberUpdateSubmit = (e) => {
+    e.preventDefault();
+    console.log("Updated member", e);
+  };
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <h2>Admin</h2>
-        <form action="#" className="flex flex-col gap-2">
+        <form
+          action="#"
+          className="flex flex-col gap-2"
+          onSubmit={onGroupEditSubmit}
+        >
           <label htmlFor="name" className="flex flex-col gap-1">
             Name
             <input
@@ -49,7 +74,7 @@ export const GroupManagement = ({
               className="border divide-slate-400 py-1 px-2"
             ></input>
           </label>
-          <button type="submit">Save</button>
+          <Button type="submit">Save</Button>
         </form>
 
         <label htmlFor="name" className="flex flex-col gap-1">
@@ -57,28 +82,14 @@ export const GroupManagement = ({
         </label>
         <div className="flex flex-col gap-2">
           {members.map((member) => (
-            <form key={member.id} className="grid grid-cols-[1fr_auto] gap-2">
-              <div className="flex flex-col gap-1">
-                <label htmlFor="name" className="hidden">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  defaultValue={member.name}
-                  className="border divide-slate-400 py-1 px-2"
-                />
-              </div>
-              <div className="flex gap-1">
-                <Button type="submit" size="icon" variant="destructive">
-                  <Trash />
-                </Button>
-                <Button type="submit" size="icon" variant="default">
-                  <Check />
-                </Button>
-              </div>
-            </form>
+            <GroupMemberForm key={member.id} member={member} />
           ))}
+        </div>
+        <div className="flex gap-2 justify-end">
+          <Button variant="outline" onClick={onMemberAddClick}>
+            <Plus />
+            Add member
+          </Button>
         </div>
       </div>
     </div>
