@@ -3,6 +3,7 @@ import { cardRoutes } from "./cards.routes";
 import { artistRoutes } from "./artists.routes";
 import { portfolioRoutes } from "./private/portfolio.routes";
 import { userAdminRoutes } from "./admin/userAdmin.routes";
+import { groupRoutes } from "./groups.routes";
 
 export const setupRoutes = (app: Elysia) => {
   return app
@@ -11,4 +12,5 @@ export const setupRoutes = (app: Elysia) => {
     .use(artistRoutes)
     .use(portfolioRoutes)
     .use(userAdminRoutes)
+    .use(groupRoutes);
 };
