@@ -1,6 +1,7 @@
 import { StandardLayout } from "@/components/layouts/Standard";
 import { useGroupById } from "@/hooks/api/groups/useGroupById";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft as Back } from "lucide-react";
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -17,9 +18,10 @@ export default function GroupDetail() {
 
   return (
     <StandardLayout>
-      <div className="flex flex-wrap gap-4">
-        <div className="grid grid-cols-1 gap-4 p-2 rounded-md border border-solid border-border hover:bg-background/80 max-h-96">
-          <div className="grid grid-cols-1 gap-2 justify-items-center">
+      <div className="flex-col gap-4">
+        <Link to="/groups"><Back /></Link>
+        <div className="grid grid-cols-1 gap-4 p-2 hover:bg-background/80 max-h-96">
+          <div className="grid grid-cols-1 gap-2">
             <img
               width={275}
               height={200}

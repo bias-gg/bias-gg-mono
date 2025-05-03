@@ -13,6 +13,7 @@ export const GroupLink = ({ group }: GroupLinkProps) => {
     >
       <div className="flex flex-col justify-center">
         <img
+          draggable={false}
           src="https://picsum.photos/id/1005/1280/720.webp"
           alt={`${group.name} group`}
           className="block rounded-md"
