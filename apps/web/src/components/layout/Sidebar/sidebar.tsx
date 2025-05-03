@@ -46,7 +46,7 @@ export function Sidebar() {
 
   return (
     <div className={cn(
-      "fixed top-0 h-full w-64 bg-background border-r transition-transform duration-300 lg:translate-x-0",
+      "fixed top-0 h-full w-64 bg-background border-r transition-transform duration-300",
       isOpen ? "translate-x-0" : "-translate-x-full"
     )}>
       <div className="p-4">
@@ -54,7 +54,6 @@ export function Sidebar() {
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
             <X />

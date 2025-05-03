@@ -9,7 +9,6 @@ export const SidebarButton = () => {
     <Button
       variant="ghost"
       size="icon"
-      className="lg:hidden"
       onClick={() => setIsOpen(!isOpen)}
     >
       {isOpen ? <X /> : <Menu />}
