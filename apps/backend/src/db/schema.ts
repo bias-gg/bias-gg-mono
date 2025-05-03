@@ -7,16 +7,17 @@ import {
   pgSchema,
 } from "drizzle-orm/pg-core";
 import { creatable } from "./schemaHelpers/creatableSchema";
+import { ReleaseTypes } from "@repo/types/releases/ReleaseType.ts";
 
 export const appSchema = pgSchema("app");
 
 // Define base tables first
 
-export const releaseType = appSchema.enum("release_type", ["album", "single"]);
-export const release = appSchema.table("releases", {
+export const releaseType = appSchema.enum("release_type", ReleaseTypes);
+export const releases = appSchema.table("releases", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  artistId: integer()
+  groupId: integer()
     .notNull()
     .references(() => artists.id),
   type: releaseType(),
@@ -29,7 +30,7 @@ export const cards = appSchema.table("cards", {
   description: varchar({ length: 255 }),
   price: integer().notNull(),
   likes: integer().default(0),
-  releaseId: integer().notNull().references(() => release.id),
+  releaseId: integer().notNull().references(() => releases.id),
   ...creatable,
 });
 
