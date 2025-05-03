@@ -1,14 +1,8 @@
 import { Elysia } from "elysia";
-import { setupRoutes } from "./routes/index";
-import cors from "@elysiajs/cors";
+import { setupRoutes as routes } from "./routes/index";
+import { corsMiddleware as cors } from "./middleware/cors";
+import { swaggerMiddleware as swagger } from "./middleware/swagger";
 
-const app = setupRoutes(new Elysia()
-  .use(
-    cors({
-      origin: true,
-    }),
-  ));
-
-app.listen(3000);
+const app = new Elysia().use(swagger).use(cors).use(routes).listen(3000);
 
 console.log("🚀 Server ready at http://localhost:3000");
