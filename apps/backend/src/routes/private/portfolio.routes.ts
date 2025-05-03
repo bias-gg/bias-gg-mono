@@ -1,7 +1,7 @@
 import Elysia from "elysia";
 import { authMiddleware } from "../../middleware/auth";
-import { CardsController } from "../../controllers/cards.controller";
+import { CardsRepository } from "../../repositories/cards.repository";
 
 export const portfolioRoutes = new Elysia({ prefix: "/portfolio" })
   .use(authMiddleware)
-  .get("/", ({ user }) => CardsController.getCardsByUser(user));
+  .get("/", ({ user }) => CardsRepository.getCardsByUser(user));

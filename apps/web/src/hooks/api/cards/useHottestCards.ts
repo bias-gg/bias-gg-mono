@@ -22,12 +22,6 @@ export const useHottestCards = (): Result<ResultType, Error> => {
     return Ok({ data: [], loading: true });
   }
 
-  const safeParsedData = CardSchema.safeParse(data);
-
-  if (safeParsedData.error) {
-    return Err(safeParsedData.error);
-  }
-
   return Ok({ data, loading: false });
 };
 
