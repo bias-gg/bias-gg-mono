@@ -27,7 +27,6 @@ export const CardsRepository = {
 
   getCardsByUser: async (user: User): Promise<Card[]> => {
     // TODO: Actually make this work
-    console.log("Current user", user);
     const cardsFromDb = await db.select().from(cards).limit(10);
 
     return cardsFromDb.map((card) => CardSchema.parse(card));
