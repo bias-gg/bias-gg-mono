@@ -1,6 +1,7 @@
 import { CardSchema, Card } from "@repo/types/cards/CardType.ts";
 import { Result, Ok, Err } from "ts-results";
 import { useQuery } from "@tanstack/react-query";
+import { getApiHost } from "@/lib/api";
 
 type ResultType = {
   data: Card[];
@@ -10,7 +11,7 @@ type ResultType = {
 export const useHottestCards = (): Result<ResultType, Error> => {
   const { data, isPending, error } = useQuery<Card[]>({
     queryKey: ['hottestcards'],
-    queryFn: () => fetch('http://localhost:3000/cards/hottest').then((res) => res.json()),
+    queryFn: () => fetch(`${getApiHost()}/cards/hottest`).then((res) => res.json()),
   });
 
   if (error) {
