@@ -10,8 +10,6 @@ export const useIsCurrentUserAdmin = (): boolean => {
 
   const userId = user?.id;
 
-  console.log("userId", userId);
-
   const { data, isPending, isError, error } = useQuery<{ isAdmin: boolean }>({
     queryKey: [QUERY_KEYS, userId],
     queryFn: async () => {
