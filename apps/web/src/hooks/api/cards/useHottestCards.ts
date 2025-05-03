@@ -1,7 +1,7 @@
 import { CardSchema, Card } from "@repo/types/cards/CardType.ts";
 import { Result, Ok, Err } from "ts-results";
 import { useQuery } from "@tanstack/react-query";
-import { getApiHost } from "@/lib/api";
+import { getApiHost } from "@/lib/apiUtils";
 
 type ResultType = {
   data: Card[];

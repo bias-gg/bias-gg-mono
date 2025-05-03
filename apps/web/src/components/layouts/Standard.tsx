@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/header";
 import { PropsWithChildren } from "react";
 import { SidebarContextProvider } from "../layout/Sidebar/SidebarContext";
+import { AdminToolbar } from "../admin/AdminToolbar";
 
 export const StandardLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -14,6 +15,7 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
             </div>
           </main>
         </div>
+        <AdminToolbar />
       </div>
     </SidebarContextProvider>
   );
