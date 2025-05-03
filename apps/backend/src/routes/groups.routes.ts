@@ -1,6 +1,7 @@
 import Elysia, { t } from "elysia";
 import { idAsNumberValidator, paginationValidator } from "./utils/validation";
 import { GroupsRepository } from "../repositories/groups.repository";
+import { ArtistsRepository } from "../repositories/artists.repository";
 
 export const groupRoutes = new Elysia({ prefix: "/groups" })
   .get(
@@ -17,8 +18,8 @@ export const groupRoutes = new Elysia({ prefix: "/groups" })
       ...idAsNumberValidator,
     }),
   })
-  .get("name/:name", ({ params }) => GroupsRepository.getGroupByName(params.name), {
+  .get("/:id/members", ({ params }) => ArtistsRepository.getArtistByGroupId(params.id), {
     params: t.Object({
-      name: t.String(),
+      ...idAsNumberValidator,
     }),
   });

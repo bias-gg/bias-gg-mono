@@ -2,6 +2,7 @@ import { StandardLayout } from "@/components/layouts/Standard";
 import { useGroupById } from "@/hooks/api/groups/useGroupById";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft as Back } from "lucide-react";
+import { GroupManagement } from "./components/GroupManagement";
 
 export default function GroupDetail() {
   const { groupId } = useParams();
@@ -33,6 +34,9 @@ export default function GroupDetail() {
             <span>{data.name}</span>
           </div>
         </div>
+      </div>
+      <div className="border border-red rounded-md p-4">
+        <GroupManagement group={data} />
       </div>
     </StandardLayout>
   );
