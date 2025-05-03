@@ -1,8 +1,7 @@
 import { GroupsService } from "@/lib/services/GroupsService";
 import { Group } from "@repo/types/groups/GroupType.ts";
 import { useQuery } from "@tanstack/react-query";
-
-const GROUPS_QUERY_KEY = ["groups"];
+import { GROUPS_QUERY_KEYS } from "./constants";
 
 type GroupsResult = {
   data: Group[];
@@ -12,7 +11,7 @@ type GroupsResult = {
 
 export const useGroups = (): GroupsResult => {
   const { data, isPending, error} = useQuery({
-    queryKey: GROUPS_QUERY_KEY,
+    queryKey: GROUPS_QUERY_KEYS.ALL_GROUPS,
     queryFn: async () => {
       return GroupsService.getGroups();
     },

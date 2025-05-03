@@ -9,13 +9,13 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
       <div className="min-h-screen bg-background">
         <Header />
         <div className="flex">
-          <main className="flex-1 lg:ml-64">
+          <main className="flex-1">
             <div className="container py-6">
               {children}
             </div>
           </main>
         </div>
-        <AdminToolbar />
+        {/* <AdminToolbar /> */}
       </div>
     </SidebarContextProvider>
   );

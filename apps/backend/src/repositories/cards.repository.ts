@@ -9,7 +9,6 @@ import {
 } from "../db/schema";
 import { eq, desc, getTableColumns } from "drizzle-orm";
 import type { User } from "elysia-clerk";
-import { ArtistSchema } from "@repo/types/artists/ArtistType.js";
 
 export const CardsRepository = {
   getHottest: async (): Promise<Card[]> => {
@@ -28,8 +27,6 @@ export const CardsRepository = {
       .leftJoin(groups, eq(groups.id, groupsToCards.groupId))
       .orderBy(desc(cards.likes), desc(cards.createdAt))
       .limit(10);
-
-    console.log("cardsFromDb", cardsFromDb);
 
     return cardsFromDb.map((card) => CardSchema.parse(card));
   },

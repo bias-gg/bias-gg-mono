@@ -1,5 +1,6 @@
 import { StandardLayout } from "@/components/layouts/Standard";
 import { useGroups } from "@/hooks/api/groups/useGroups";
+import { GroupLink } from "./components/GroupLink";
 
 export default function Groups() {
   const { data, loading, error } = useGroups();
@@ -12,5 +13,13 @@ export default function Groups() {
     return <div>Loading...</div>;
   }
 
-  return <StandardLayout>Groups</StandardLayout>;
+  return (
+    <StandardLayout>
+      <div className="flex flex-wrap gap-3">
+        {data.map((group) => (
+          <GroupLink key={group.name} group={group} />
+        ))}
+      </div>
+    </StandardLayout>
+  );
 }
