@@ -9,14 +9,14 @@ interface PhotocardProps {
   card: CardType;
 }
 
-export function Photocard({ card: { name, imageUrl, group, album, price }, }: PhotocardProps) {
+export function Photocard({ card: { title, price, artistName, groupName }, }: PhotocardProps) {
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative aspect-[3/4] overflow-hidden">
           <img
-            src={imageUrl}
-            alt={`${name} photocard`}
+            src="https://picsum.photos/id/1005/1280/720"
+            alt={`${title} photocard`}
             className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
           />
           <Button
@@ -30,13 +30,13 @@ export function Photocard({ card: { name, imageUrl, group, album, price }, }: Ph
       </CardContent>
       <CardFooter className="flex flex-col items-start gap-2 p-4">
         <div className="flex items-center gap-2">
-          <Badge variant="secondary">{group}</Badge>
-          <Badge variant="outline">{album}</Badge>
+          <Badge variant="secondary">{groupName}</Badge>
+          <Badge variant="outline">Album</Badge>
         </div>
-        <h3 className="font-medium">{name}</h3>
+        <h3 className="font-medium">{artistName}</h3>
         {price && (
           <div className="flex items-center justify-between w-full">
-            <span className="text-lg font-semibold">{price}</span>
+            <span className="text-lg font-semibold">${price}</span>
             <Button size="sm" variant="outline">
               <Share2 className="w-4 h-4 mr-2" />
               Trade

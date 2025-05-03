@@ -1,24 +1,47 @@
 import { CardSchema, type Card } from "@repo/types/cards/CardType.ts";
 import { db } from "../db/client";
-import { cards } from "../db/schema";
-import { eq, desc } from "drizzle-orm";
+import {
+  artists,
+  artistsToCards,
+  cards,
+  groups,
+  groupsToCards,
+} from "../db/schema";
+import { eq, desc, getTableColumns } from "drizzle-orm";
 import type { User } from "elysia-clerk";
+import { ArtistSchema } from "@repo/types/artists/ArtistType.js";
 
 export const CardsRepository = {
   getHottest: async (): Promise<Card[]> => {
     const cardsFromDb = await db
-      .select()
+      .select({
+        ...getTableColumns(cards),
+        artistId: artistsToCards.artistId,
+        artistName: artists.name,
+        groupId: groupsToCards.groupId,
+        groupName: groups.name,
+      })
       .from(cards)
-      .orderBy(desc(cards.likes))
+      .innerJoin(artistsToCards, eq(artistsToCards.cardId, cards.id))
+      .leftJoin(artists, eq(artists.id, artistsToCards.artistId))
+      .innerJoin(groupsToCards, eq(groupsToCards.cardId, cards.id))
+      .leftJoin(groups, eq(groups.id, groupsToCards.groupId))
+      .orderBy(desc(cards.likes), desc(cards.createdAt))
       .limit(10);
+
+    console.log("cardsFromDb", cardsFromDb);
 
     return cardsFromDb.map((card) => CardSchema.parse(card));
   },
 
   getCardById: async (id: number): Promise<Card | undefined> => {
     const cardFromDb = await db
-      .select()
+      .select({ cards, artists, groups })
       .from(cards)
+      .leftJoin(artistsToCards, eq(artistsToCards.cardId, cards.id))
+      .leftJoin(artists, eq(artists.id, artistsToCards.artistId))
+      .leftJoin(groupsToCards, eq(groupsToCards.cardId, cards.id))
+      .leftJoin(groups, eq(groups.id, groupsToCards.groupId))
       .where(eq(cards.id, id))
       .limit(1);
 
@@ -27,7 +50,14 @@ export const CardsRepository = {
 
   getCardsByUser: async (user: User): Promise<Card[]> => {
     // TODO: Actually make this work
-    const cardsFromDb = await db.select().from(cards).limit(10);
+    const cardsFromDb = await db
+      .select({ cards, artists, groups })
+      .from(cards)
+      .leftJoin(artistsToCards, eq(artistsToCards.cardId, cards.id))
+      .leftJoin(artists, eq(artists.id, artistsToCards.artistId))
+      .leftJoin(groupsToCards, eq(groupsToCards.cardId, cards.id))
+      .leftJoin(groups, eq(groups.id, groupsToCards.groupId))
+      .limit(10);
 
     return cardsFromDb.map((card) => CardSchema.parse(card));
   },

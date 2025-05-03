@@ -8,6 +8,10 @@ export const CardSchema = z
     description: z.string().optional(),
     price: z.number().nonnegative().min(0),
     likes: z.number().nonnegative(),
+    artistId: z.number(),
+    groupId: z.number().nullable(),
+    artistName: z.string(),
+    groupName: z.string().nullable(),
   })
   .extend(idSchema)
   .extend(creatableSchema);

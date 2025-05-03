@@ -12,31 +12,24 @@ export const appSchema = pgSchema("app");
 
 // Define base tables first
 
-export const releaseType = appSchema.enum("release_type", ["album", "single"]);
 export const release = appSchema.table("releases", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  artistId: integer()
-    .notNull()
-    .references(() => artists.id),
-  type: releaseType(),
+  artistId: integer().notNull().references(() => artists.id),
   ...creatable,
 });
-
 export const cards = appSchema.table("cards", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   title: varchar({ length: 255 }).notNull(),
   description: varchar({ length: 255 }),
   price: integer().notNull(),
   likes: integer().default(0),
-  releaseId: integer().notNull().references(() => release.id),
   ...creatable,
 });
 
 export const groups = appSchema.table("groups", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
   name: varchar({ length: 255 }).notNull(),
-  company: varchar({ length: 255 }).notNull(),
   ...creatable,
 });
 
