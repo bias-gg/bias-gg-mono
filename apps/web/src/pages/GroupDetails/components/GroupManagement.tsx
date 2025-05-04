@@ -1,48 +1,111 @@
-import { useState, type JSX } from "react";
+import { FormEvent, useState, type JSX } from "react";
 import { useAdminContext } from "@/contexts/AdminContext";
 import { Group } from "@repo/types/groups/GroupType.js";
 import { useMembersForGroup } from "@/hooks/api/members/useMembersForGroup";
 import { Artist } from "@repo/types/artists/ArtistType.ts";
 import { Button } from "@/components/ui/button";
-import { Check, Plus, Trash } from "lucide-react";
-import { TooltipButton } from "@/components/ui/tooltip-button";
+import { Plus } from "lucide-react";
 import { GroupMemberForm } from "./GroupMemberForm";
+import { useUpdateGroup } from "@/hooks/api/groups/useUpdateGroup";
+import { useCreateMember } from "@/hooks/api/members/useCreateMember";
+import { useUpdateArtist } from "@/hooks/api/artists/useUpdateArtist";
+import { useDeleteMember } from "@/hooks/api/members/useDeleteMember";
+import { v4 as uuidv4 } from "uuid";
+
+interface GroupFormElements extends HTMLFormControlsCollection {
+  name: HTMLInputElement;
+  company: HTMLInputElement;
+}
+
+interface GroupForm extends HTMLFormElement {
+  elements: GroupFormElements;
+}
 
 type GroupManagementProps = {
   group: Group;
 };
 
+export type NewMember = Pick<Artist, "name"> & { tempId: string };
+
 export const GroupManagement = ({
   group,
 }: GroupManagementProps): JSX.Element | null => {
+  const groupId = group.id;
   const { isAdmin } = useAdminContext();
 
-  const [newMember, setNewMember] = useState<Artist | null>(null);
+  const { mutate: createMember } = useCreateMember();
+  const { mutate: updateGroup } = useUpdateGroup();
+  const { mutate: updateMember } = useUpdateArtist();
+  const { mutate: deleteMember } = useDeleteMember();
 
-  const { members, isLoading, error } = useMembersForGroup({
-    groupId: group.id,
+  const [newMembers, setNewMembers] = useState<NewMember[]>([]);
+
+  const { members } = useMembersForGroup({
+    groupId,
   });
 
-  console.table(members);
+  const onNewMemberSubmit = (
+    member: NewMember,
+    event: FormEvent<GroupMemberForm>,
+  ) => {
+    createMember({
+      groupId,
+      artist: {
+        name: event.currentTarget.elements.name.value,
+        createdAt: new Date(),
+      },
+    });
+
+    setNewMembers(newMembers.filter((m) => m.tempId !== member.tempId));
+  };
+
+  const onMemberUpdateSubmit = (
+    member: Artist,
+    event: FormEvent<GroupMemberForm>,
+  ) => {
+    const updatedMember = {
+      ...member,
+      name: event.currentTarget.elements.name.value,
+    };
+
+    updateMember({ id: member.id, artist: updatedMember });
+  };
+
+  const onNewMemberDeleteClick = (memberId: string) => {
+    setNewMembers(newMembers.filter((m) => m.tempId !== memberId));
+  };
+
+  const onMemberDeleteClick = (memberId: number) => {
+    console.log("Deleted member", memberId);
+    deleteMember({ memberId, groupId });
+  };
 
   if (!isAdmin) {
     return null;
   }
 
-  const onGroupEditSubmit = (e) => {
+  const onGroupEditSubmit = (e: FormEvent<GroupForm>) => {
     e.preventDefault();
-    console.log("Edited group", e);
+
+    const updatedGroup = {
+      ...group,
+      name: e.currentTarget.elements.name.value,
+      company: e.currentTarget.elements.company.value,
+    };
+
+    updateGroup({ id: group.id, group: updatedGroup });
   };
 
-  const onMemberAddClick = (e) => {
-    e.preventDefault();
-    console.log("Added member", e);
+  const onMemberAddClick = () => {
+    const members = [...newMembers, { name: "", tempId: uuidv4() }];
+
+    setNewMembers(members);
   };
 
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <h2>Admin</h2>
+        <h2>Admin Tools</h2>
         <form
           action="#"
           className="flex flex-col gap-2"
@@ -75,7 +138,20 @@ export const GroupManagement = ({
         </label>
         <div className="flex flex-col gap-2">
           {members.map((member) => (
-            <GroupMemberForm key={member.id} member={member} groupId={group.id} />
+            <GroupMemberForm
+              key={member.id}
+              member={member}
+              onMemberDeleteClick={onMemberDeleteClick}
+              onMemberUpdateSubmit={onMemberUpdateSubmit}
+            />
+          ))}
+          {newMembers.map((member) => (
+            <GroupMemberForm
+              key={member.tempId}
+              member={member}
+              onMemberDeleteClick={onNewMemberDeleteClick}
+              onMemberUpdateSubmit={onNewMemberSubmit}
+            />
           ))}
         </div>
         <div className="flex gap-2 justify-end">

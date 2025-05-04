@@ -1,44 +1,45 @@
 import type { FormEvent } from "react";
 import { TooltipButton } from "@/components/ui/tooltip-button";
-import { useDeleteMember } from "@/hooks/api/members/useDeleteMember";
-import { useUpdateArtist } from "@/hooks/api/artists/useUpdateArtist";
-import type { Artist } from "@repo/types/artists/ArtistType.js";
+import { isArtist, type Artist } from "@repo/types/artists/ArtistType.js";
 import { Check, Trash } from "lucide-react";
+import { NewMember } from "./GroupManagement";
 
 interface MemberFormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
 }
 
-interface GroupMemberForm extends HTMLFormElement {
+export interface GroupMemberForm extends HTMLFormElement {
   elements: MemberFormElements;
 }
 
 type GroupMemberFormProps = {
-  groupId: string | number;
-  member: Artist;
+  member: Artist | NewMember;
+  onMemberDeleteClick: (memberId: string | number) => void;
+  onMemberUpdateSubmit: (
+    member: Artist | NewMember,
+    event: FormEvent<GroupMemberForm>,
+  ) => void;
 };
 
-export const GroupMemberForm = ({ groupId, member }: GroupMemberFormProps) => {
-  const { mutate: updateMember } = useUpdateArtist();
-  const { mutate: deleteMember } = useDeleteMember();
-
-  const onMemberUpdateSubmit = (event: FormEvent<GroupMemberForm>) => {
-    event.preventDefault();
-    const updatedMember = {
-      ...member,
-      name: event.currentTarget.elements.name.value,
-    };
-    updateMember({ id: member.id, artist: updatedMember });
+export const GroupMemberForm = ({
+  member,
+  onMemberDeleteClick,
+  onMemberUpdateSubmit,
+}: GroupMemberFormProps) => {
+  const handleMemberDeleteClick = () => {
+    console.log("Deleted member", member);
+    const memberId = isArtist(member) ? member.id : member.tempId;
+    onMemberDeleteClick(memberId);
   };
 
-  const onMemberDeleteClick = (memberId: string | number) => {
-    deleteMember({ memberId, groupId });
+  const handleMemberUpdateSubmit = (event: FormEvent<GroupMemberForm>) => {
+    event.preventDefault();
+    onMemberUpdateSubmit(member, event);
   };
 
   return (
     <form
-      onSubmit={onMemberUpdateSubmit}
-      key={member.id}
+      onSubmit={handleMemberUpdateSubmit}
       className="grid grid-cols-[1fr_auto] gap-2"
     >
       <div className="flex flex-col gap-1">
@@ -54,7 +55,7 @@ export const GroupMemberForm = ({ groupId, member }: GroupMemberFormProps) => {
       </div>
       <div className="flex gap-1">
         <TooltipButton
-          onClick={() => onMemberDeleteClick(member.id)}
+          onClick={handleMemberDeleteClick}
           tooltipLabel="Remove member"
           size="icon"
           variant="destructive"

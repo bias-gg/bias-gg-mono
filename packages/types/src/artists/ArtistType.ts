@@ -11,3 +11,6 @@ export const ArtistSchema = z
   .extend(creatableSchema);
 
 export type Artist = z.infer<typeof ArtistSchema>;
+
+export const isArtist = (value: unknown): value is Artist =>
+  ArtistSchema.safeParse(value).success;
