@@ -5,6 +5,7 @@ import { portfolioRoutes } from "./private/portfolio.routes";
 import { userAdminRoutes } from "./admin/userAdmin.routes";
 import { groupRoutes } from "./groups.routes";
 import { releasesRoutes } from "./releases.routes";
+import { uploadthingRoutes } from "./private/uploadthing/uploadthing.routes";
 
 export const setupRoutes = (app: Elysia) => {
   return app
@@ -14,5 +15,6 @@ export const setupRoutes = (app: Elysia) => {
     .use(portfolioRoutes)
     .use(userAdminRoutes)
     .use(groupRoutes)
-    .use(releasesRoutes);
+    .use(releasesRoutes)
+    .use(uploadthingRoutes)
 };

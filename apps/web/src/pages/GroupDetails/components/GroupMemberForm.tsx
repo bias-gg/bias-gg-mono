@@ -3,6 +3,7 @@ import { TooltipButton } from "@/components/ui/tooltip-button";
 import { isArtist, type Artist } from "@repo/types/artists/ArtistType.js";
 import { Check, Trash } from "lucide-react";
 import { NewMember } from "./GroupManagement";
+import { UploadButton } from "@/components/Uploadthing";
 
 interface MemberFormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
@@ -71,6 +72,7 @@ export const GroupMemberForm = ({
           <Check />
         </TooltipButton>
       </div>
+      <UploadButton endpoint="artistImage" />
     </form>
   );
 };
