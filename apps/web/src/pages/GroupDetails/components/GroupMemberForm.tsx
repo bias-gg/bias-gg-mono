@@ -3,6 +3,7 @@ import { TooltipButton } from "@/components/ui/tooltip-button";
 import { isArtist, type Artist } from "@repo/types/artists/ArtistType.js";
 import { Check, Trash } from "lucide-react";
 import { NewMember } from "./GroupManagement";
+import { UploadButton } from "@/components/Uploadthing";
 
 interface MemberFormElements extends HTMLFormControlsCollection {
   name: HTMLInputElement;
@@ -27,7 +28,6 @@ export const GroupMemberForm = ({
   onMemberUpdateSubmit,
 }: GroupMemberFormProps) => {
   const handleMemberDeleteClick = () => {
-    console.log("Deleted member", member);
     const memberId = isArtist(member) ? member.id : member.tempId;
     onMemberDeleteClick(memberId);
   };
@@ -55,6 +55,7 @@ export const GroupMemberForm = ({
       </div>
       <div className="flex gap-1">
         <TooltipButton
+          type="button"
           onClick={handleMemberDeleteClick}
           tooltipLabel="Remove member"
           size="icon"
@@ -71,6 +72,7 @@ export const GroupMemberForm = ({
           <Check />
         </TooltipButton>
       </div>
+      <UploadButton endpoint="artistImage" />
     </form>
   );
 };

@@ -3,8 +3,10 @@ import { ArtistsService } from "@/lib/services/ArtistsService";
 import { Artist } from "@repo/types/artists/ArtistType.ts";
 import { useAuth } from "@clerk/clerk-react";
 import { MEMBERS_QUERY_KEYS } from "../members/contants";
+import { useToast } from "@/hooks/useToast";
 
 export const useUpdateArtist = () => {
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const { getToken } = useAuth();
 
@@ -16,11 +18,13 @@ export const useUpdateArtist = () => {
         data.artist,
       );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: [
-          ...MEMBERS_QUERY_KEYS.MEMBERS_FOR_GROUP,
-        ],
+        queryKey: [...MEMBERS_QUERY_KEYS.MEMBERS_FOR_GROUP],
+      });
+      toast({
+        title: "Artist updated",
+        description: `${data.name} updated successfully`,
       });
     },
   });
