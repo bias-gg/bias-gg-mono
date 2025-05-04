@@ -18,8 +18,25 @@ export const groupRoutes = new Elysia({ prefix: "/groups" })
       ...idAsNumberValidator,
     }),
   })
-  .get("/:id/members", ({ params }) => ArtistsRepository.getArtistByGroupId(params.id), {
-    params: t.Object({
-      ...idAsNumberValidator,
-    }),
-  });
+  .get(
+    "/:id/members",
+    ({ params }) => ArtistsRepository.getArtistByGroupId(params.id),
+    {
+      params: t.Object({
+        ...idAsNumberValidator,
+      }),
+    },
+  )
+  .put(
+    "/:id",
+    ({ params, body }) => GroupsRepository.updateGroupById(params.id, body),
+    {
+      params: t.Object({
+        ...idAsNumberValidator,
+      }),
+      body: t.Object({
+        name: t.String(),
+        company: t.String(),
+      }),
+    },
+  );

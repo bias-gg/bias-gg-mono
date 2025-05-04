@@ -5,6 +5,8 @@ import { artists, groupsToArtists } from "../db/schema";
 import { calculateOffset } from "./utils/calculateOffset";
 import { eq, getTableColumns } from "drizzle-orm";
 
+type NewArtist = typeof artists.$inferInsert;
+
 export const ArtistsRepository = {
   getArtists: async (pagination: Pagination): Promise<Artist[]> => {
     const artistsFromDb = await db
@@ -36,5 +38,39 @@ export const ArtistsRepository = {
       .where(eq(groupsToArtists.groupId, groupId));
 
     return artistFromDb.map((artist) => ArtistSchema.parse(artist));
+  },
+  updateArtistById: async (
+    id: number,
+    body: Partial<Artist>,
+  ): Promise<Artist> => {
+    const result = await db
+      .update(artists)
+      .set({
+        ...body,
+        updatedAt: new Date(),
+      })
+      .where(eq(artists.id, id))
+      .returning(getTableColumns(artists));
+
+    return ArtistSchema.parse(result[0]);
+  },
+  deleteArtistById: async (id: number): Promise<Artist> => {
+    const result = await db
+      .delete(artists)
+      .where(eq(artists.id, id))
+      .returning(getTableColumns(artists));
+
+    return ArtistSchema.parse(result[0]);
+  },
+  createArtist: async (body: NewArtist): Promise<Artist> => {
+    const result = await db
+      .insert(artists)
+      .values({
+        ...body,
+        createdAt: new Date(),
+      })
+      .returning(getTableColumns(artists));
+
+    return ArtistSchema.parse(result[0]);
   },
 };

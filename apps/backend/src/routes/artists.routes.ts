@@ -5,7 +5,8 @@ import { ArtistsRepository } from "../repositories/artists.repository";
 export const artistRoutes = new Elysia({ prefix: "/artists" })
   .get(
     "/",
-    ({ query: { page, limit } }) => ArtistsRepository.getArtists({ page, limit }),
+    ({ query: { page, limit } }) =>
+      ArtistsRepository.getArtists({ page, limit }),
     {
       query: t.Object({
         ...paginationValidator,
@@ -16,4 +17,30 @@ export const artistRoutes = new Elysia({ prefix: "/artists" })
     params: t.Object({
       ...idAsNumberValidator,
     }),
-  });
+  })
+  .put(
+    "/:id",
+    ({ params, body }) => {
+      return ArtistsRepository.updateArtistById(params.id, body);
+    },
+    {
+      params: t.Object({
+        ...idAsNumberValidator,
+      }),
+      body: t.Object({
+        name: t.String(),
+        bio: t.String(),
+      }),
+    },
+  )
+  .delete(
+    "/:id",
+    ({ params }) => {
+      return ArtistsRepository.deleteArtistById(params.id);
+    },
+    {
+      params: t.Object({
+        ...idAsNumberValidator,
+      }),
+    },
+  );
