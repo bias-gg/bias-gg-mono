@@ -8,6 +8,7 @@
  * In your app, import using the correct entrypoint for your adapter.
  * @see https://docs.uploadthing.com/api-reference/server#createuploadthing
  */
+import type { User } from "elysia-clerk";
 import {
   createBuilder,
   type FileRouter,
@@ -15,6 +16,7 @@ import {
 
 export type AdapterArgs = {
   req: Request;
+  user: User;
 };
 
 const f = createBuilder<AdapterArgs>({
@@ -46,9 +48,10 @@ export const uploadRouter = {
       awaitServerData: true,
     },
   )
-    .middleware(({ files }) => {
-      files;
-      // ^?
+    .middleware(({ files, req }) => {
+      console.log("files", files);
+      console.log("req", req);
+
       return {
         uploadedBy: "fake-user-id-213",
       };
