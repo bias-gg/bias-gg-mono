@@ -29,7 +29,6 @@ export const artistRoutes = new Elysia({ prefix: "/artists" })
       }),
       body: t.Object({
         name: t.String(),
-        bio: t.String(),
       }),
     },
   )

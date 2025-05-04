@@ -1,19 +1,38 @@
+import type { FormEvent } from "react";
 import { TooltipButton } from "@/components/ui/tooltip-button";
-import { Artist } from "@repo/types/artists/ArtistType.js";
+import { useDeleteMember } from "@/hooks/api/members/useDeleteMember";
+import { useUpdateArtist } from "@/hooks/api/artists/useUpdateArtist";
+import type { Artist } from "@repo/types/artists/ArtistType.js";
 import { Check, Trash } from "lucide-react";
 
+interface MemberFormElements extends HTMLFormControlsCollection {
+  name: HTMLInputElement;
+}
+
+interface GroupMemberForm extends HTMLFormElement {
+  elements: MemberFormElements;
+}
+
 type GroupMemberFormProps = {
+  groupId: string | number;
   member: Artist;
 };
 
-export const GroupMemberForm = ({ member }: GroupMemberFormProps) => {
-  const onMemberUpdateSubmit = (e) => {
-    e.preventDefault();
-    console.log("Updated member", e);
+export const GroupMemberForm = ({ groupId, member }: GroupMemberFormProps) => {
+  const { mutate: updateMember } = useUpdateArtist();
+  const { mutate: deleteMember } = useDeleteMember();
+
+  const onMemberUpdateSubmit = (event: FormEvent<GroupMemberForm>) => {
+    event.preventDefault();
+    const updatedMember = {
+      ...member,
+      name: event.currentTarget.elements.name.value,
+    };
+    updateMember({ id: member.id, artist: updatedMember });
   };
 
-  const onMemberDeleteClick = (memberId) => {
-    console.log("Deleted member", memberId);
+  const onMemberDeleteClick = (memberId: string | number) => {
+    deleteMember({ memberId, groupId });
   };
 
   return (

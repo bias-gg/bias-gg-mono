@@ -1,11 +1,11 @@
 import { ArtistSchema, type Artist } from "@repo/types/artists/ArtistType.ts";
 import type { Pagination } from "../types/pagination";
 import { db } from "../db/client";
-import { artists, groupsToArtists } from "../db/schema";
+import { artists } from "../db/schema";
 import { calculateOffset } from "./utils/calculateOffset";
 import { eq, getTableColumns } from "drizzle-orm";
 
-type NewArtist = typeof artists.$inferInsert;
+export type NewArtist = typeof artists.$inferInsert;
 
 export const ArtistsRepository = {
   getArtists: async (pagination: Pagination): Promise<Artist[]> => {
@@ -30,15 +30,6 @@ export const ArtistsRepository = {
       : undefined;
   },
 
-  getArtistByGroupId: async (groupId: number): Promise<Artist[]> => {
-    const artistFromDb = await db
-      .select(getTableColumns(artists))
-      .from(groupsToArtists)
-      .innerJoin(artists, eq(groupsToArtists.artistId, artists.id))
-      .where(eq(groupsToArtists.groupId, groupId));
-
-    return artistFromDb.map((artist) => ArtistSchema.parse(artist));
-  },
   updateArtistById: async (
     id: number,
     body: Partial<Artist>,

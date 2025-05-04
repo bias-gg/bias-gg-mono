@@ -17,7 +17,7 @@ export const useMembersForGroup = ({
   groupId,
 }: MembersForGroupProps): MembersForGroupResponse => {
   const { data, error, isPending } = useQuery({
-    queryKey: [MEMBERS_QUERY_KEYS.MEMBERS_FOR_GROUP, groupId],
+    queryKey: [...MEMBERS_QUERY_KEYS.MEMBERS_FOR_GROUP, groupId],
     queryFn: async () => MembersService.getMembersForGroup(groupId),
   });
 

@@ -23,6 +23,8 @@ export const GroupManagement = ({
     groupId: group.id,
   });
 
+  console.table(members);
+
   if (!isAdmin) {
     return null;
   }
@@ -35,15 +37,6 @@ export const GroupManagement = ({
   const onMemberAddClick = (e) => {
     e.preventDefault();
     console.log("Added member", e);
-  };
-
-  const onMemberDeleteClick = (memberId) => {
-    console.log("Deleted member", memberId);
-  };
-
-  const onMemberUpdateSubmit = (e) => {
-    e.preventDefault();
-    console.log("Updated member", e);
   };
 
   return (
@@ -82,7 +75,7 @@ export const GroupManagement = ({
         </label>
         <div className="flex flex-col gap-2">
           {members.map((member) => (
-            <GroupMemberForm key={member.id} member={member} />
+            <GroupMemberForm key={member.id} member={member} groupId={group.id} />
           ))}
         </div>
         <div className="flex gap-2 justify-end">
