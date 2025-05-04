@@ -27,7 +27,6 @@ export const GroupMemberForm = ({
   onMemberUpdateSubmit,
 }: GroupMemberFormProps) => {
   const handleMemberDeleteClick = () => {
-    console.log("Deleted member", member);
     const memberId = isArtist(member) ? member.id : member.tempId;
     onMemberDeleteClick(memberId);
   };
@@ -55,6 +54,7 @@ export const GroupMemberForm = ({
       </div>
       <div className="flex gap-1">
         <TooltipButton
+          type="button"
           onClick={handleMemberDeleteClick}
           tooltipLabel="Remove member"
           size="icon"
