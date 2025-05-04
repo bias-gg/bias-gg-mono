@@ -9,10 +9,7 @@
  * @see https://docs.uploadthing.com/api-reference/server#createuploadthing
  */
 import type { User } from "elysia-clerk";
-import {
-  createBuilder,
-  type FileRouter,
-} from "uploadthing/server";
+import { createBuilder, type FileRouter } from "uploadthing/server";
 
 export type AdapterArgs = {
   req: Request;
@@ -48,22 +45,17 @@ export const uploadRouter = {
       awaitServerData: true,
     },
   )
-    .middleware(({ files, req }) => {
-      console.log("files", files);
-      console.log("req", req);
-
+    .middleware(({ user }) => {
       return {
-        uploadedBy: "fake-user-id-213",
+        uploadedBy: user.id,
+        uploadedAt: new Date().toUTCString(),
       };
     })
-    .onUploadError(({ error, fileKey }) => {
-      console.log("upload error", { message: error.message, fileKey });
+    .onUploadError(({ error }) => {
       throw error;
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-      console.log("upload completed", metadata, file);
-      // await new Promise((r) => setTimeout(r, 15000));
-      return { foo: "bar", baz: "qux" };
+    .onUploadComplete(({ metadata }) => {
+      return { metadata };
     }),
 } satisfies FileRouter;
 
