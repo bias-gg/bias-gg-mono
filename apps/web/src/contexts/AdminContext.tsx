@@ -1,17 +1,29 @@
 import { useIsCurrentUserAdmin } from "@/hooks/api/admin/isCurrentUserAdmin";
-import React from "react";
+import React, { useMemo, useState } from "react";
 
 type AdminContextType = {
   isAdmin: boolean;
+  showAdminTools: boolean;
+  setShowAdminTools: (showAdminBar: boolean) => void;
 };
 
 const AdminContext = React.createContext<AdminContextType | null>(null);
 
 export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
-  const isAdmin  = useIsCurrentUserAdmin();
+  const [showAdminTools, setShowAdminTools] = useState(false);
+  const isAdmin = useIsCurrentUserAdmin();
+
+  const contextValue = useMemo(
+    () => ({
+      isAdmin,
+      showAdminTools: isAdmin && showAdminTools,
+      setShowAdminTools,
+    }),
+    [showAdminTools, isAdmin],
+  );
 
   return (
-    <AdminContext.Provider value={{ isAdmin }}>
+    <AdminContext.Provider value={contextValue}>
       {children}
     </AdminContext.Provider>
   );
