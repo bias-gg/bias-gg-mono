@@ -15,7 +15,7 @@ export default function Groups() {
 
   return (
     <StandardLayout>
-      <div className="flex flex-wrap gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {data.map((group) => (
           <GroupLink key={group.name} group={group} />
         ))}
