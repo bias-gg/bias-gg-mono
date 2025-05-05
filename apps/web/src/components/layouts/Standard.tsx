@@ -15,7 +15,7 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
             </div>
           </main>
         </div>
-        {/* <AdminToolbar /> */}
+        <AdminToolbar />
       </div>
     </SidebarContextProvider>
   );

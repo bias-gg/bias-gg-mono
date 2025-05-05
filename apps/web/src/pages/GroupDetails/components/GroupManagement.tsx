@@ -31,7 +31,7 @@ export const GroupManagement = ({
   group,
 }: GroupManagementProps): JSX.Element | null => {
   const groupId = group.id;
-  const { isAdmin } = useAdminContext();
+  const { showAdminTools } = useAdminContext();
 
   const { mutate: createMember } = useCreateMember();
   const { mutate: updateGroup } = useUpdateGroup();
@@ -80,7 +80,7 @@ export const GroupManagement = ({
     deleteMember({ memberId, groupId });
   };
 
-  if (!isAdmin) {
+  if (!showAdminTools) {
     return null;
   }
 
@@ -103,62 +103,64 @@ export const GroupManagement = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <h2>Admin Tools</h2>
-        <form
-          action="#"
-          className="flex flex-col gap-2"
-          onSubmit={onGroupEditSubmit}
-        >
-          <label htmlFor="name" className="flex flex-col gap-1">
-            Name
-            <input
-              type="text"
-              name="name"
-              defaultValue={group.name}
-              className="border divide-slate-400 py-1 px-2"
-            />
-          </label>
-
-          <label htmlFor="company" className="flex flex-col gap-1">
-            Company
-            <input
-              type="text"
-              name="company"
-              defaultValue={group.company}
-              className="border divide-slate-400 py-1 px-2"
-            ></input>
-          </label>
-          <Button type="submit">Save</Button>
-        </form>
-
-        <label htmlFor="name" className="flex flex-col gap-1">
-          Members
-        </label>
+    <div className="border border-red rounded-md p-4">
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
-          {members.map((member) => (
-            <GroupMemberForm
-              key={member.id}
-              member={member}
-              onMemberDeleteClick={onMemberDeleteClick}
-              onMemberUpdateSubmit={onMemberUpdateSubmit}
-            />
-          ))}
-          {newMembers.map((member) => (
-            <GroupMemberForm
-              key={member.tempId}
-              member={member}
-              onMemberDeleteClick={onNewMemberDeleteClick}
-              onMemberUpdateSubmit={onNewMemberSubmit}
-            />
-          ))}
-        </div>
-        <div className="flex gap-2 justify-end">
-          <Button variant="outline" onClick={onMemberAddClick}>
-            <Plus />
-            Add member
-          </Button>
+          <h2>Admin Tools</h2>
+          <form
+            action="#"
+            className="flex flex-col gap-2"
+            onSubmit={onGroupEditSubmit}
+          >
+            <label htmlFor="name" className="flex flex-col gap-1">
+              Name
+              <input
+                type="text"
+                name="name"
+                defaultValue={group.name}
+                className="border divide-slate-400 py-1 px-2"
+              />
+            </label>
+
+            <label htmlFor="company" className="flex flex-col gap-1">
+              Company
+              <input
+                type="text"
+                name="company"
+                defaultValue={group.company}
+                className="border divide-slate-400 py-1 px-2"
+              ></input>
+            </label>
+            <Button type="submit">Save</Button>
+          </form>
+
+          <label htmlFor="name" className="flex flex-col gap-1">
+            Members
+          </label>
+          <div className="flex flex-col gap-2">
+            {members.map((member) => (
+              <GroupMemberForm
+                key={member.id}
+                member={member}
+                onMemberDeleteClick={onMemberDeleteClick}
+                onMemberUpdateSubmit={onMemberUpdateSubmit}
+              />
+            ))}
+            {newMembers.map((member) => (
+              <GroupMemberForm
+                key={member.tempId}
+                member={member}
+                onMemberDeleteClick={onNewMemberDeleteClick}
+                onMemberUpdateSubmit={onNewMemberSubmit}
+              />
+            ))}
+          </div>
+          <div className="flex gap-2 justify-end">
+            <Button variant="outline" onClick={onMemberAddClick}>
+              <Plus />
+              Add member
+            </Button>
+          </div>
         </div>
       </div>
     </div>

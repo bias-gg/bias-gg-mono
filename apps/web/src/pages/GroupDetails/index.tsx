@@ -3,11 +3,12 @@ import { useGroupById } from "@/hooks/api/groups/useGroupById";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft as Back } from "lucide-react";
 import { GroupManagement } from "./components/GroupManagement";
+import { useAdminContext } from "@/contexts/AdminContext";
 
 export default function GroupDetail() {
   const { groupId } = useParams();
   const { data, loading, error } = useGroupById(groupId);
-
+  const { showAdminTools } = useAdminContext();
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -20,7 +21,9 @@ export default function GroupDetail() {
   return (
     <StandardLayout>
       <div className="flex-col gap-4">
-        <Link to="/groups"><Back /></Link>
+        <Link to="/groups">
+          <Back />
+        </Link>
         <div className="grid grid-cols-1 gap-4 p-2 hover:bg-background/80 max-h-96">
           <div className="grid grid-cols-1 gap-2">
             <img
@@ -35,9 +38,7 @@ export default function GroupDetail() {
           </div>
         </div>
       </div>
-      <div className="border border-red rounded-md p-4">
-        <GroupManagement group={data} />
-      </div>
+      <GroupManagement group={data} />
     </StandardLayout>
   );
 }
