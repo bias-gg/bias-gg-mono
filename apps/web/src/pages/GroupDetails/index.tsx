@@ -8,7 +8,6 @@ import { useAdminContext } from "@/contexts/AdminContext";
 export default function GroupDetail() {
   const { groupId } = useParams();
   const { data, loading, error } = useGroupById(groupId);
-  const { showAdminTools } = useAdminContext();
 
   if (error) {
     return <div>Error: {error.message}</div>;
