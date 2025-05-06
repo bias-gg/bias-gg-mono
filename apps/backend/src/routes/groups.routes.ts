@@ -3,11 +3,12 @@ import { idAsNumberValidator, paginationValidator } from "./utils/validation";
 import { GroupsRepository } from "../repositories/groups.repository";
 import { ArtistsRepository } from "../repositories/artists.repository";
 import { MembersRepository } from "../repositories/members.repository";
+import { GroupsService } from "../services/groups.service";
 
 export const groupRoutes = new Elysia({ prefix: "/groups" })
   .get(
     "/",
-    ({ query: { page, limit } }) => GroupsRepository.getGroups({ page, limit }),
+    ({ query: { page, limit } }) => GroupsService.list({ page, limit }),
     {
       query: t.Object({
         ...paginationValidator,

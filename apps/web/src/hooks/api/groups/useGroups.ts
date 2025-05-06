@@ -20,17 +20,18 @@ export const useGroups = (limit = 20): GroupsResult => {
         if (pageParam.page > pageParam.pages) {
           return {
             data: [],
-            total: 0,
+            total: pageParam.count,
             nextPage: pageParam.page,
             pages: pageParam.pages,
           };
         }
         return GroupsService.getGroups(pageParam.page, pageParam.limit);
       },
-      initialPageParam: { page: 1, limit, pages: 1 },
+      initialPageParam: { page: 1, limit, count: limit, pages: 1 },
       getNextPageParam: (lastPage) => ({
         page: lastPage.nextPage,
         limit,
+        count: lastPage.total,
         pages: lastPage.pages,
       }),
     });

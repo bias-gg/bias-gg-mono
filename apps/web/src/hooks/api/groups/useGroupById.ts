@@ -11,8 +11,8 @@ export const useGroupById = (id: string | number) => {
   });
 
   return {
-    data: data ?? null,
-    loading: isPending,
+    group: data ?? null,
+    isLoading: isPending,
     error: error ?? null,
   };
 };

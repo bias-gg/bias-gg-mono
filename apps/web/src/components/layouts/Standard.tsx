@@ -8,11 +8,7 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
     <div>
       <Sidebar>
         <Header />
-        <div className="h-screen">
-          <main className="px-10 py-8">
-            {children}
-          </main>
-        </div>
+        <main className="h-screen px-10 py-8">{children}</main>
         <AdminToolbar />
       </Sidebar>
     </div>
