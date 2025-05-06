@@ -1,5 +1,5 @@
-import { CardGrid } from "@/components/ui/card-grid";
-import { Photocard } from "@/components/photocard";
+import { CardGrid } from "@/components/ui/CardGrid";
+import { Photocard } from "@/components/Photocard";
 import { StandardLayout } from "@/components/layouts/Standard";
 import { useHottestCards } from "@/hooks/api/cards/useHottestCards";
 

@@ -1,8 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
-import { LinkButton } from "@/components/ui/LinkButton";
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 

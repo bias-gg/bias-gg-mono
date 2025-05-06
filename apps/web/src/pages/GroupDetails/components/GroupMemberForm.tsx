@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import { TooltipButton } from "@/components/ui/tooltip-button";
+import { TooltipButton } from "@/components/ui/TooltipButton";
 import { isArtist, type Artist } from "@repo/types/artists/ArtistType.js";
 import { Check, Trash } from "lucide-react";
 import { NewMember } from "./GroupManagement";

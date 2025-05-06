@@ -2,8 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PropsWithChildren } from "react";
 import { TooltipProvider } from "./ui/tooltip";
 import { AdminProvider } from "@/contexts/AdminContext";
-import { ToastProvider } from "./ui/toast";
-import { Toaster } from "./ui/toaster";
+import { Toaster, ToastProvider } from "./ui/toast";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +15,7 @@ export const AppProviders = ({ children }: AppProvidersProps) => {
         <AdminProvider>
           <ToastProvider>
             {children}
+            {/* Toaster is the root component that displays all toasts. */}
             <Toaster />
           </ToastProvider>
         </AdminProvider>

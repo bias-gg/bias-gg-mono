@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { Fragment, useCallback, useEffect, useRef } from "react";
 import { StandardLayout } from "@/components/layouts/Standard";
 import { useGroups } from "@/hooks/api/groups/useGroups";
 import { GroupLink } from "./components/GroupLink";
