@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/ui/Input";
 import { Search } from "lucide-react";
 import { SidebarButton } from "./Sidebar/SidebarButton";
 import { Link } from "react-router-dom";
@@ -8,10 +8,14 @@ import {
   SignInButton,
   UserButton,
 } from "@clerk/clerk-react";
+import { forwardRef } from "react";
 
-export const Header = () => {
+export const Header = forwardRef<HTMLDivElement, {}>((_, ref) => {
   return (
-    <header className="sticky flex gap-3 px-2 py-3 top-0 w-full border-b border-primary bg-white h-16 z-1">
+    <header
+      ref={ref}
+      className="sticky flex gap-3 px-2 py-3 top-0 w-full border-b border-primary bg-white h-16 z-1"
+    >
       <SidebarButton />
       <div className="flex items-center gap-2 justify-start">
         <Link
@@ -42,4 +46,4 @@ export const Header = () => {
       </div>
     </header>
   );
-};
+});

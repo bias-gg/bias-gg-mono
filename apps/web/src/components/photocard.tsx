@@ -1,7 +1,8 @@
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardFooter } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Image } from "@/components/ui/Image";
 import { Heart, Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Card as CardType } from "@repo/types/cards/CardType.ts";
 
 interface PhotocardProps {
@@ -13,10 +14,10 @@ export function Photocard({ card: { title, price, artistName, groupName }, }: Ph
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative aspect-[3/4] overflow-hidden">
-          <img
+          <Image
             src="https://picsum.photos/id/1005/1280/720"
             alt={`${title} photocard`}
-            className="object-cover w-full h-full transition-transform duration-300 hover:scale-105"
+            className="w-full h-full transition-transform duration-300 hover:scale-105"
           />
           <Button
             variant="ghost"

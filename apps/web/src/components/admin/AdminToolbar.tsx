@@ -1,9 +1,8 @@
 import { useIsCurrentUserAdmin } from "@/hooks/api/admin/isCurrentUserAdmin";
-import { Button } from "../ui/button";
 import { Eye, EyeClosed, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
-import { TooltipButton } from "../ui/tooltip-button";
-import { Toolbar, ToolbarButton } from "../ui/toolbar";
+import { TooltipButton } from "../ui/TooltipButton";
+import { Toolbar, ToolbarButton } from "../ui/Toolbar";
 import { useAdminContext } from "@/contexts/AdminContext";
 
 export const AdminToolbar = (): JSX.Element | null => {

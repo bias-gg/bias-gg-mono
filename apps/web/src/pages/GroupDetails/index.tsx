@@ -1,3 +1,4 @@
+import { Image } from "@/components/ui/Image";
 import { StandardLayout } from "@/components/layouts/Standard";
 import { useGroupById } from "@/hooks/api/groups/useGroupById";
 import { Link, useParams } from "react-router-dom";
@@ -39,11 +40,11 @@ export default function GroupDetail() {
         <section id="info" className="flex">
           <div className="flex flex-col lg:flex-row gap-5 lg:gap-15">
             <div className="flex flex-col gap-3 p-5 bg-base-200 rounded-box w-full h-min lg:w-1/2">
-              <img
+              <Image
+                rounded="top"
                 src="https://picsum.photos/id/1005/1280/720.webp"
                 alt={`${group.name} photo`}
-                className="aspect-video rounded-box w-full"
-                loading="lazy"
+                className="aspect-video w-full"
               />
               <h2 className="text-3xl font-bold w-full">{group.name}</h2>
             </div>
@@ -53,11 +54,12 @@ export default function GroupDetail() {
                   key={member.id}
                   className="flex flex-col gap-2 rounded-box aspect-square h-min"
                 >
-                  <img
+                  <Image
+                    variant="avatar"
+                    rounded="top"
                     src="https://picsum.photos/id/1005/200/200.webp"
                     alt={`${member.name} photo`}
-                    className="aspect-square rounded-box flex grow shrink basis-full"
-                    loading="lazy"
+                    className="flex grow shrink basis-full"
                   />
                   <p className="text-l font-bold">{member.name}</p>
                 </div>

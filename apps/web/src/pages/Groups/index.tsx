@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useRef } from "react";
-import { StandardLayout } from "@/components/layouts/Standard";
+import { StandardLayout, StandardLayoutContent } from "@/components/layouts/Standard";
 import { useGroups } from "@/hooks/api/groups/useGroups";
 import { GroupLink } from "./components/GroupLink";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
@@ -35,7 +35,7 @@ export default function Groups() {
 
   return (
     <StandardLayout>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto h-full">
+      <StandardLayoutContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto h-full">
         {data.pages.map((page, i) => (
           <Fragment key={i}> 
             {page.data.map((group) => (
@@ -43,8 +43,8 @@ export default function Groups() {
             ))}
           </Fragment>
         ))}
-      </div>
-      <div ref={intersectionElement} className="h-20"></div>
+        <div ref={intersectionElement} className="h-20"></div>
+      </StandardLayoutContent>
     </StandardLayout>
   );
 }
