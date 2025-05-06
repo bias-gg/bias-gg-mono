@@ -1,7 +1,6 @@
 import { FormEvent, useState, type JSX } from "react";
 import { useAdminContext } from "@/contexts/AdminContext";
 import { Group } from "@repo/types/groups/GroupType.js";
-import { useMembersForGroup } from "@/hooks/api/members/useMembersForGroup";
 import { Artist } from "@repo/types/artists/ArtistType.ts";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
@@ -23,12 +22,14 @@ interface GroupForm extends HTMLFormElement {
 
 type GroupManagementProps = {
   group: Group;
+  members: Artist[];
 };
 
 export type NewMember = Pick<Artist, "name"> & { tempId: string };
 
 export const GroupManagement = ({
   group,
+  members,
 }: GroupManagementProps): JSX.Element | null => {
   const groupId = group.id;
   const { showAdminTools } = useAdminContext();
@@ -39,10 +40,6 @@ export const GroupManagement = ({
   const { mutate: deleteMember } = useDeleteMember();
 
   const [newMembers, setNewMembers] = useState<NewMember[]>([]);
-
-  const { members } = useMembersForGroup({
-    groupId,
-  });
 
   const onNewMemberSubmit = (
     member: NewMember,

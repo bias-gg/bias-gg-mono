@@ -14,7 +14,7 @@ export const AdminToolbar = (): JSX.Element | null => {
   }
 
   return (
-    <Toolbar className="absolute bottom-1 right-1 rounded-md bg-slate-300 border-solid border border-slate-400 p-1">
+    <Toolbar className="fixed right-1 bottom-1 w-fit rounded-md bg-slate-300 border-solid border border-slate-400 p-1">
       <ToolbarButton asChild={true}>
         <TooltipButton
           tooltipLabel="Show admin tools"

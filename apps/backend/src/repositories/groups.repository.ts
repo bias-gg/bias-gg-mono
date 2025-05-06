@@ -6,6 +6,11 @@ import { GroupSchema, type Group } from "@repo/types/groups/GroupType.ts";
 import { withPagination } from "./utils/queries/withPagination";
 import { withIdFilter } from "./utils/queries/withIdFilter";
 
+const getGroupCount = async (): Promise<number> => {
+  const count = await db.$count(groups);
+  return count;
+};
+
 const getGroups = async (pagination: Pagination): Promise<Group[]> => {
   const groupsFromDb = await withPagination(
     db.select().from(groups).$dynamic(),
@@ -55,6 +60,7 @@ const updateGroupById = async (
 };
 
 export const GroupsRepository = {
+  getGroupCount,
   getGroups,
   getGroupById,
   getGroupByName,

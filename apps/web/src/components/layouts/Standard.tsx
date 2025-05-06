@@ -1,22 +1,16 @@
 import { Header } from "@/components/layout/header";
 import { PropsWithChildren } from "react";
-import { SidebarContextProvider } from "../layout/Sidebar/SidebarContext";
 import { AdminToolbar } from "../admin/AdminToolbar";
+import { Sidebar } from "../layout/Sidebar/sidebar";
 
 export const StandardLayout = ({ children }: PropsWithChildren) => {
   return (
-    <SidebarContextProvider>
-      <div className="min-h-screen bg-background">
+    <div>
+      <Sidebar>
         <Header />
-        <div className="flex">
-          <main className="flex-1">
-            <div className="container py-6">
-              {children}
-            </div>
-          </main>
-        </div>
+        <main className="h-screen px-10 py-8">{children}</main>
         <AdminToolbar />
-      </div>
-    </SidebarContextProvider>
+      </Sidebar>
+    </div>
   );
 };

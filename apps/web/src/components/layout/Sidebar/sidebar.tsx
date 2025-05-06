@@ -1,10 +1,10 @@
-
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { useSidebar } from "./SidebarContext";
 import { X } from "lucide-react";
 import { LinkButton } from "@/components/ui/LinkButton";
+import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
 const hash = (data: string): string => {
   // make up a super simple hash function
@@ -17,9 +17,7 @@ type GroupType = {
   favorite: boolean;
 };
 
-export function Sidebar() {
-  const { isOpen, setIsOpen } = useSidebar();
-
+export function Sidebar({ children }: PropsWithChildren) {
   // TODO: replace with real data of the current user's favorited groups
   const groups: GroupType[] = [
     {
@@ -45,55 +43,29 @@ export function Sidebar() {
   ];
 
   return (
-    <div className={cn(
-      "fixed top-0 h-full w-64 bg-background border-r transition-transform duration-300",
-      isOpen ? "translate-x-0" : "-translate-x-full"
-    )}>
-      <div className="p-4">
-        <div className="flex w-full justify-end">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            <X />
-          </Button>
-        </div>
-        <ScrollArea className="h-[calc(100vh)]">
-          <div className="space-y-1">
-            <LinkButton
-              link="/wishlist"
-              variant="ghost"
-              className="w-full justify-start"
-            >
-              Wishlist
-            </LinkButton>
-            <LinkButton
-              link="/collection"
-              variant="ghost"
-              className="w-full justify-start"
-            >
-              My Collection
-            </LinkButton>
-            <LinkButton
-              link="/groups"
-              variant="ghost"
-              className="w-full justify-start"
-            >
-              All Groups 
-            </LinkButton>
-            {groups.map(({name, id}) => (
-              <LinkButton
-                key={name}
-                link={`/trade/${id}`}
-                variant="ghost"
-                className="w-full justify-start"
-              >
-                {name}
-              </LinkButton>
-            ))}
-          </div>
-        </ScrollArea>
+    <div className="drawer">
+      <input id="sidebar" type="checkbox" className="drawer-toggle" />
+      <div className="drawer-content">{children}</div>
+      <div className="drawer-side">
+        <label htmlFor="sidebar" aria-label="Open sidebar" className="drawer-overlay" />
+        <ul className="menu bg-base-200 text-base-content min-h-full w-70 p-4 overflow-y-auto">
+          <li>
+            <Link to="/groups">All groups</Link>
+          </li>
+          <li>
+            <Link to="/wishlist">Wishlist</Link>
+          </li>
+          
+          <div className="divider" />
+
+          {groups.map((group) => (
+            <li key={group.id}>
+              <Link to={`/group/${group.id}`}>
+                {group.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
