@@ -12,7 +12,7 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
     <div>
       <Sidebar>
         <Header ref={headerRef} />
-        <main className={`h-[calc(100vh-${headerHeight})]`}>{children}</main>
+        <main className={`h-[calc(100vh-${headerHeight})] bg-base-200 flex flex-col items-center`}>{children}</main>
         <AdminToolbar />
       </Sidebar>
     </div>
@@ -29,5 +29,5 @@ export const StandardLayoutContent = ({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) => {
-  return <div className={cn("px-10 py-8", className)}>{children}</div>;
+  return <div className={cn("px-10 py-8 max-w-screen-xl ", className)}>{children}</div>;
 };

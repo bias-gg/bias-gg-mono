@@ -20,7 +20,7 @@ const App = () => (
         <Route path="/trade" element={<Trade />} />
         <Route path="/trade/:artistId" element={<TradeArtist />} />
         <Route path="/groups" element={<Groups />} />
-        <Route path="/group/:groupId" element={<GroupDetail />} />
+        <Route path="/groups/:groupId" element={<GroupDetail />} />
 
         {/* Admin Routes */}
         <Route path="/admin" element={<Admin />} />
