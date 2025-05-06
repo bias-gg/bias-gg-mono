@@ -4,7 +4,7 @@ import { useGroups } from "@/hooks/api/groups/useGroups";
 import { GroupLink } from "./components/GroupLink";
 import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
 
-const GROUPS_PER_PAGE = 10;
+const GROUPS_PER_PAGE = 30;
 
 export default function Groups() {
   const intersectionElement = useRef<HTMLDivElement>(null);
