@@ -1,17 +1,13 @@
-import { Button } from "@/components/ui/button"
-import { Menu, X } from "lucide-react";
-import { useSidebar } from "./SidebarContext";
+import { Menu } from "lucide-react";
 
 export const SidebarButton = () => {
-  const { isOpen, setIsOpen } = useSidebar();
-
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setIsOpen(!isOpen)}
+    <label
+      htmlFor="sidebar"
+      aria-label="Open sidebar"
+      className="btn btn-ghost drawer w-fit"
     >
-      {isOpen ? <X /> : <Menu />}
-    </Button>
-  )
-}
+      <Menu size={18} />
+    </label>
+  );
+};
