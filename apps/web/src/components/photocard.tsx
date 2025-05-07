@@ -4,27 +4,36 @@ import { Image } from "@/components/ui/Image";
 import { Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card as CardType } from "@repo/types/cards/CardType.ts";
+import { useState } from "react";
 
 interface PhotocardProps {
   card: CardType;
 }
 
 export function Photocard({ card: { title, price, artistName, groupName }, }: PhotocardProps) {
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
+
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-lg">
       <CardContent className="p-0">
         <div className="relative aspect-[3/4] overflow-hidden">
           <Image
+            rounded="top"
             src="https://picsum.photos/id/1005/1280/720"
             alt={`${title} photocard`}
             className="w-full h-full transition-transform duration-300 hover:scale-105"
           />
           <Button
             variant="ghost"
-            size="icon"
-            className="absolute top-2 right-2 bg-white/80 hover:bg-white"
+            size="sm"
+            className="absolute top-2 right-2 hover:bg-white"
+            onClick={handleLike}
           >
-            <Heart className="w-5 h-5" />
+            <Heart className={`w- h-full transition-all ${isLiked ? "text-red-500 fill-red-500" : "text-black fill-transparent"}`} />
           </Button>
         </div>
       </CardContent>
