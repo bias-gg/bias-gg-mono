@@ -15,6 +15,15 @@ export const groupRoutes = new Elysia({ prefix: "/groups" })
       }),
     },
   )
+  .get(
+    "/hottest",
+    ({ query: { limit } }) => GroupsRepository.getHottest(limit),
+    {
+      query: t.Object({
+        limit: t.Number({ default: 10, maximum: 50, minimum: 1 }),
+      }),
+    },
+  )
   .get("/:id", ({ params }) => GroupsRepository.getGroupById(params.id), {
     params: t.Object({
       ...idAsNumberValidator,
@@ -26,45 +35,6 @@ export const groupRoutes = new Elysia({ prefix: "/groups" })
     {
       params: t.Object({
         ...idAsNumberValidator,
-      }),
-    },
-  )
-  .put(
-    "/:id",
-    ({ params, body }) => GroupsRepository.updateGroupById(params.id, body),
-    {
-      params: t.Object({
-        ...idAsNumberValidator,
-      }),
-      body: t.Object({
-        name: t.String(),
-        company: t.String(),
-      }),
-    },
-  )
-  .post(
-    "/:id/members",
-    ({ params, body }) => {
-      return MembersRepository.createMember(params.id, body);
-    },
-    {
-      params: t.Object({
-        ...idAsNumberValidator,
-      }),
-      body: t.Object({
-        name: t.String(),
-      }),
-    },
-  )
-  .delete(
-    "/:id/members/:memberId",
-    ({ params }) => {
-      return MembersRepository.deleteMember(params.id, params.memberId);
-    },
-    {
-      params: t.Object({
-        ...idAsNumberValidator,
-        memberId: t.Number(),
       }),
     },
   );

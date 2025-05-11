@@ -1,10 +1,11 @@
 import { db } from "../db/client";
-import { groups } from "../db/schema";
+import { groups, likedGroups } from "../db/schema";
 import type { Pagination } from "../types/pagination";
-import { eq, getTableColumns } from "drizzle-orm";
+import { eq, desc, getTableColumns, and } from "drizzle-orm";
 import { GroupSchema, type Group } from "@repo/types/groups/GroupType.ts";
 import { withPagination } from "./utils/queries/withPagination";
 import { withIdFilter } from "./utils/queries/withIdFilter";
+import { calculateOffset } from "./utils/calculateOffset";
 
 const getGroupCount = async (): Promise<number> => {
   const count = await db.$count(groups);
@@ -16,6 +17,15 @@ const getGroups = async (pagination: Pagination): Promise<Group[]> => {
     db.select().from(groups).$dynamic(),
     pagination,
   );
+  return groupsFromDb.map((group) => GroupSchema.parse(group));
+};
+
+const getHottest = async (limit = 10): Promise<Group[]> => {
+  const groupsFromDb = await db
+    .select()
+    .from(groups)
+    .orderBy(desc(groups.likes))
+    .limit(limit);
   return groupsFromDb.map((group) => GroupSchema.parse(group));
 };
 
@@ -35,6 +45,60 @@ const getGroupByName = async (name: string): Promise<Group | undefined> => {
     .where(eq(groups.name, name))
     .limit(1);
   return groupFromDb.length > 0 ? GroupSchema.parse(groupFromDb[0]) : undefined;
+};
+
+const getLikedGroups = async (
+  userId: string,
+  pagination: Pagination,
+): Promise<Group[]> => {
+  const groupsFromDb = await withPagination(
+    db
+      .select(getTableColumns(groups))
+      .from(groups)
+      .innerJoin(likedGroups, eq(groups.id, likedGroups.groupId))
+      .where(eq(likedGroups.userId, userId))
+      .orderBy(desc(groups.likes))
+      .$dynamic(),
+    pagination,
+  );
+  return groupsFromDb.map((group) => GroupSchema.parse(group));
+};
+
+const addLikedGroup = async (
+  userId: string,
+  groupId: number,
+): Promise<Group> => {
+  const groupFromDb = await getGroupById(groupId);
+
+  if (!groupFromDb) {
+    throw new Error("Group not found");
+  }
+
+  await db.insert(likedGroups).values({
+    groupId,
+    userId,
+  });
+
+  return groupFromDb;
+};
+
+const removeLikedGroup = async (
+  userId: string,
+  groupId: number,
+): Promise<Group> => {
+  const groupFromDb = await getGroupById(groupId);
+
+  if (!groupFromDb) {
+    throw new Error("Group not found");
+  }
+
+  await db
+    .delete(likedGroups)
+    .where(
+      and(eq(likedGroups.groupId, groupId), eq(likedGroups.userId, userId)),
+    );
+
+  return groupFromDb;
 };
 
 const updateGroupById = async (
@@ -62,7 +126,11 @@ const updateGroupById = async (
 export const GroupsRepository = {
   getGroupCount,
   getGroups,
+  getHottest,
   getGroupById,
   getGroupByName,
+  getLikedGroups,
+  addLikedGroup,
   updateGroupById,
+  removeLikedGroup,
 };

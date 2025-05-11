@@ -11,7 +11,7 @@ import { eq, desc, getTableColumns } from "drizzle-orm";
 import type { User } from "elysia-clerk";
 
 export const CardsRepository = {
-  getHottest: async (): Promise<Card[]> => {
+  getHottest: async (limit = 10): Promise<Card[]> => {
     const cardsFromDb = await db
       .select({
         ...getTableColumns(cards),
@@ -26,7 +26,7 @@ export const CardsRepository = {
       .innerJoin(groupsToCards, eq(groupsToCards.cardId, cards.id))
       .leftJoin(groups, eq(groups.id, groupsToCards.groupId))
       .orderBy(desc(cards.likes), desc(cards.createdAt))
-      .limit(10);
+      .limit(limit);
 
     return cardsFromDb.map((card) => CardSchema.parse(card));
   },

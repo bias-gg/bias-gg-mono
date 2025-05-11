@@ -5,12 +5,15 @@ import { Heart, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card as CardType } from "@repo/types/cards/CardType.ts";
 import { useState } from "react";
+import { LikeButton } from "./LikeButton";
 
 interface PhotocardProps {
   card: CardType;
 }
 
-export function Photocard({ card: { title, price, artistName, groupName }, }: PhotocardProps) {
+export function Photocard({
+  card: { title, price, artistName, groupName },
+}: PhotocardProps) {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleLike = () => {
@@ -27,14 +30,7 @@ export function Photocard({ card: { title, price, artistName, groupName }, }: Ph
             alt={`${title} photocard`}
             className="w-full h-full transition-transform duration-300 hover:scale-105"
           />
-          <Button
-            variant="ghost"
-            size="sm"
-            className="absolute top-2 right-2 hover:bg-white"
-            onClick={handleLike}
-          >
-            <Heart className={`w- h-full transition-all ${isLiked ? "text-red-500 fill-red-500" : "text-black fill-transparent"}`} />
-          </Button>
+          <LikeButton isLiked={isLiked} onLiked={setIsLiked} />
         </div>
       </CardContent>
       <CardFooter className="flex flex-col items-start gap-2 p-4">

@@ -1,7 +1,7 @@
-import { Header } from "@/components/layout/header";
+import { Header } from "@/components/layout/Header";
 import { PropsWithChildren, useRef } from "react";
 import { AdminToolbar } from "../admin/AdminToolbar";
-import { Sidebar } from "../layout/Sidebar/sidebar";
+import { Sidebar } from "../layout/Sidebar/Sidebar";
 import { cn } from "@/lib/utils";
 
 export const StandardLayout = ({ children }: PropsWithChildren) => {
@@ -12,7 +12,11 @@ export const StandardLayout = ({ children }: PropsWithChildren) => {
     <div>
       <Sidebar>
         <Header ref={headerRef} />
-        <main className={`h-[calc(100vh-${headerHeight})] bg-base-200 flex flex-col items-center`}>{children}</main>
+        <main
+          className={`h-[calc(100vh-${headerHeight})] bg-base-200 flex flex-col items-center`}
+        >
+          {children}
+        </main>
         <AdminToolbar />
       </Sidebar>
     </div>
@@ -29,5 +33,9 @@ export const StandardLayoutContent = ({
   children,
   className,
 }: PropsWithChildren<{ className?: string }>) => {
-  return <div className={cn("px-10 py-8 max-w-screen-xl ", className)}>{children}</div>;
+  return (
+    <div className={cn("px-10 py-8", className)}>
+      {children}
+    </div>
+  );
 };
