@@ -55,7 +55,7 @@ export const LikeButton = ({ isLiked, onLiked }: LikeButtonProps) => {
       onClick={handleLike}
     >
       <Heart
-        className={`w- h-full transition-all ${statefulIsLiked ? "text-red-500 fill-red-500" : "text-black fill-transparent"}`}
+        className={`w-full h-full transition-all ${statefulIsLiked ? "text-red-500 fill-red-500" : "text-black fill-transparent"}`}
       />
     </Button>
   );

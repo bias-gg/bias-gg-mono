@@ -13,8 +13,6 @@ const Home = () => {
   const hottestGroupsResult = useHottestGroups(5);
 
   if (hottestCardsResult.err || hottestGroupsResult.error) {
-    console.log(hottestCardsResult.err);
-    console.log(hottestGroupsResult.error);
     return <div>Error</div>;
   }
 

@@ -73,7 +73,6 @@ export const GroupManagement = ({
   };
 
   const onMemberDeleteClick = (memberId: number) => {
-    console.log("Deleted member", memberId);
     deleteMember({ memberId, groupId });
   };
 

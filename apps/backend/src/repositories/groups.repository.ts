@@ -30,8 +30,6 @@ const getGroups = async (
     pagination,
   );
 
-  console.log(groupsFromDb);
-
   return groupsFromDb
     .map((group) => ({
       ...group,
@@ -53,9 +51,6 @@ const getHottest = async (limit = 10, userId = ""): Promise<Group[]> => {
     )
     .orderBy(desc(groups.likes))
     .limit(limit);
-
-  console.log("userId", userId);
-  console.log(groupsFromDb);
 
   return groupsFromDb
     .map((group) => ({
@@ -133,8 +128,6 @@ const addLikedGroup = async (
     groupId,
     userId,
   });
-
-  console.log("inserted");
 
   return groupFromDb;
 };

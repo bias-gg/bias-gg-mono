@@ -19,7 +19,6 @@ export const authGroupRoutes = new Elysia({ prefix: "/groups" })
   .post(
     "/:id/follow",
     ({ params, user }) => {
-      console.log("follow route");
       return GroupsRepository.addLikedGroup(user.id, params.id);
     },
     {
