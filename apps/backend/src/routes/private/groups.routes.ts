@@ -17,8 +17,9 @@ export const authGroupRoutes = new Elysia({ prefix: "/groups" })
     },
   )
   .post(
-    "/:id/like",
+    "/:id/follow",
     ({ params, user }) => {
+      console.log("follow route");
       return GroupsRepository.addLikedGroup(user.id, params.id);
     },
     {
@@ -28,7 +29,7 @@ export const authGroupRoutes = new Elysia({ prefix: "/groups" })
     },
   )
   .delete(
-    "/:id/like",
+    "/:id/follow",
     ({ params, user }) => {
       return GroupsRepository.removeLikedGroup(user.id, params.id);
     },

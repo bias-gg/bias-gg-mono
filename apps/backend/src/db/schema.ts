@@ -30,7 +30,9 @@ export const cards = appSchema.table("cards", {
   description: varchar({ length: 255 }),
   price: integer().notNull(),
   likes: integer().default(0),
-  releaseId: integer().notNull().references(() => releases.id),
+  releaseId: integer()
+    .notNull()
+    .references(() => releases.id),
   ...creatable,
 });
 
@@ -42,9 +44,10 @@ export const groups = appSchema.table("groups", {
   ...creatable,
 });
 
-
 export const likedGroups = appSchema.table("liked_groups", {
-  groupId: integer().notNull().references(() => groups.id),
+  groupId: integer()
+    .notNull()
+    .references(() => groups.id),
   userId: varchar({ length: 255 }).notNull(),
 });
 
@@ -106,6 +109,13 @@ export const groupRelations = relations(groups, ({ many }) => ({
   groupsToCards: many(groupsToCards),
   groupsToArtists: many(groupsToArtists),
   likedGroups: many(likedGroups),
+}));
+
+export const likedGroupsRelations = relations(likedGroups, ({ one }) => ({
+  group: one(groups, {
+    fields: [likedGroups.groupId],
+    references: [groups.id],
+  }),
 }));
 
 // Define relations for artists

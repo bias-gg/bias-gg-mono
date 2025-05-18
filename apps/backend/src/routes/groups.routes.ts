@@ -4,11 +4,14 @@ import { GroupsRepository } from "../repositories/groups.repository";
 import { ArtistsRepository } from "../repositories/artists.repository";
 import { MembersRepository } from "../repositories/members.repository";
 import { GroupsService } from "../services/groups.service";
+import { authOptionalMiddleware } from "../middleware/auth";
 
 export const groupRoutes = new Elysia({ prefix: "/groups" })
+  .use(authOptionalMiddleware)
   .get(
     "/",
-    ({ query: { page, limit } }) => GroupsService.list({ page, limit }),
+    ({ query: { page, limit }, user }) =>
+      GroupsService.list({ page, limit }, user?.id),
     {
       query: t.Object({
         ...paginationValidator,
@@ -17,18 +20,23 @@ export const groupRoutes = new Elysia({ prefix: "/groups" })
   )
   .get(
     "/hottest",
-    ({ query: { limit } }) => GroupsRepository.getHottest(limit),
+    ({ query: { limit }, user }) =>
+      GroupsRepository.getHottest(limit, user?.id),
     {
       query: t.Object({
         limit: t.Number({ default: 10, maximum: 50, minimum: 1 }),
       }),
     },
   )
-  .get("/:id", ({ params }) => GroupsRepository.getGroupById(params.id), {
-    params: t.Object({
-      ...idAsNumberValidator,
-    }),
-  })
+  .get(
+    "/:id",
+    ({ params, user }) => GroupsRepository.getGroupById(params.id, user?.id),
+    {
+      params: t.Object({
+        ...idAsNumberValidator,
+      }),
+    },
+  )
   .get(
     "/:id/members",
     ({ params }) => MembersRepository.getMembersByGroupId(params.id),

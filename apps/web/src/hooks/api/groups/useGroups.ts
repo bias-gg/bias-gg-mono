@@ -3,6 +3,7 @@ import { Group } from "@repo/types/groups/GroupType.ts";
 import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { GROUPS_QUERY_KEYS } from "./constants";
 import { PaginatedResult } from "@repo/types/results/PaginatedResult.js";
+import { useAuth } from "@clerk/clerk-react";
 
 type GroupsResult = {
   data: InfiniteData<PaginatedResult<Group>>;
@@ -13,6 +14,8 @@ type GroupsResult = {
 };
 
 export const useGroups = (limit = 20): GroupsResult => {
+  const { getToken } = useAuth();
+
   const { data, isPending, isFetchingNextPage, error, fetchNextPage } =
     useInfiniteQuery({
       queryKey: GROUPS_QUERY_KEYS.ALL_GROUPS,
@@ -25,7 +28,11 @@ export const useGroups = (limit = 20): GroupsResult => {
             pages: pageParam.pages,
           };
         }
-        return GroupsService.getGroups(pageParam.page, pageParam.limit);
+        return GroupsService.getGroups(
+          pageParam.page,
+          pageParam.limit,
+          await getToken(),
+        );
       },
       initialPageParam: { page: 1, limit, count: limit, pages: 1 },
       getNextPageParam: (lastPage) => ({

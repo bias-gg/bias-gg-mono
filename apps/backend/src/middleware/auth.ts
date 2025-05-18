@@ -4,7 +4,7 @@ import { isAdmin } from "../auth/utils/isAdmin";
 
 export const authMiddleware = (app: Elysia) =>
   app.use(clerkPlugin()).resolve(async ({ auth, error, clerk }) => {
-    if (!auth?.userId) {
+    if (!auth.userId) {
       return error(401, "Unauthorized");
     }
 
@@ -22,6 +22,17 @@ export const authAdminMiddleware = (app: Elysia) =>
     if (!isAdmin(user)) {
       return error(401, "Unauthorized");
     }
+
+    return { user };
+  });
+
+export const authOptionalMiddleware = (app: Elysia) =>
+  app.use(clerkPlugin()).resolve(async ({ auth, clerk }) => {
+    if (!auth.userId) {
+      return { user: null };
+    }
+
+    const user = await clerk.users.getUser(auth.userId);
 
     return { user };
   });

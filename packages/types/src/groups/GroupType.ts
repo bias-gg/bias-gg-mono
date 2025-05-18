@@ -1,6 +1,7 @@
 import * as z from "zod";
 import { creatableSchema } from "../Creatable";
 import { idSchema } from "../Id";
+import { likeableSchema } from "../Likeable";
 
 export const GroupSchema = z
   .object({
@@ -8,6 +9,7 @@ export const GroupSchema = z
     company: z.string().nonempty(),
   })
   .extend(idSchema)
-  .extend(creatableSchema);
+  .extend(creatableSchema)
+  .extend(likeableSchema);
 
 export type Group = z.infer<typeof GroupSchema>;

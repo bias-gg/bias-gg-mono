@@ -5,37 +5,92 @@ import { eq, desc, getTableColumns, and } from "drizzle-orm";
 import { GroupSchema, type Group } from "@repo/types/groups/GroupType.ts";
 import { withPagination } from "./utils/queries/withPagination";
 import { withIdFilter } from "./utils/queries/withIdFilter";
-import { calculateOffset } from "./utils/calculateOffset";
 
 const getGroupCount = async (): Promise<number> => {
   const count = await db.$count(groups);
   return count;
 };
 
-const getGroups = async (pagination: Pagination): Promise<Group[]> => {
+const getGroups = async (
+  pagination: Pagination,
+  userId = "",
+): Promise<Group[]> => {
   const groupsFromDb = await withPagination(
-    db.select().from(groups).$dynamic(),
+    db
+      .select({
+        ...getTableColumns(groups),
+        liked: getTableColumns(likedGroups),
+      })
+      .from(groups)
+      .leftJoin(
+        likedGroups,
+        and(eq(groups.id, likedGroups.groupId), eq(likedGroups.userId, userId)),
+      )
+      .$dynamic(),
     pagination,
   );
-  return groupsFromDb.map((group) => GroupSchema.parse(group));
+
+  console.log(groupsFromDb);
+
+  return groupsFromDb
+    .map((group) => ({
+      ...group,
+      liked: group.liked != null,
+    }))
+    .map((group) => GroupSchema.parse(group));
 };
 
-const getHottest = async (limit = 10): Promise<Group[]> => {
+const getHottest = async (limit = 10, userId = ""): Promise<Group[]> => {
   const groupsFromDb = await db
-    .select()
+    .select({
+      ...getTableColumns(groups),
+      liked: getTableColumns(likedGroups),
+    })
     .from(groups)
+    .leftJoin(
+      likedGroups,
+      and(eq(groups.id, likedGroups.groupId), eq(likedGroups.userId, userId)),
+    )
     .orderBy(desc(groups.likes))
     .limit(limit);
-  return groupsFromDb.map((group) => GroupSchema.parse(group));
+
+  console.log("userId", userId);
+  console.log(groupsFromDb);
+
+  return groupsFromDb
+    .map((group) => ({
+      ...group,
+      liked: group.liked != null,
+    }))
+    .map((group) => GroupSchema.parse(group));
 };
 
-const getGroupById = async (id: number): Promise<Group | undefined> => {
+const getGroupById = async (
+  id: number,
+  userId = "",
+): Promise<Group | undefined> => {
   const groupFromDb = await withIdFilter(
-    db.select().from(groups).$dynamic(),
+    db
+      .select({
+        ...getTableColumns(groups),
+        liked: getTableColumns(likedGroups),
+      })
+      .from(groups)
+      .leftJoin(
+        likedGroups,
+        and(eq(groups.id, likedGroups.groupId), eq(likedGroups.userId, userId)),
+      )
+      .$dynamic(),
     groups.id,
     id,
   );
-  return groupFromDb.length > 0 ? GroupSchema.parse(groupFromDb[0]) : undefined;
+
+  return groupFromDb.length > 0
+    ? GroupSchema.parse({
+        ...groupFromDb[0],
+        liked: groupFromDb[0]?.liked != null,
+      })
+    : undefined;
 };
 
 const getGroupByName = async (name: string): Promise<Group | undefined> => {
@@ -79,6 +134,8 @@ const addLikedGroup = async (
     userId,
   });
 
+  console.log("inserted");
+
   return groupFromDb;
 };
 
@@ -121,6 +178,20 @@ const updateGroupById = async (
     .returning(getTableColumns(groups));
 
   return GroupSchema.parse(result[0]);
+};
+
+const doesUserLikeGroup = async (
+  userId: string,
+  groupId: number,
+): Promise<boolean> => {
+  const likedGroup = await db
+    .select()
+    .from(likedGroups)
+    .where(
+      and(eq(likedGroups.userId, userId), eq(likedGroups.groupId, groupId)),
+    );
+
+  return likedGroup.length > 0;
 };
 
 export const GroupsRepository = {

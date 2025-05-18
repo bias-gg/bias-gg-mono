@@ -3,8 +3,11 @@ import type { PaginatedResult } from "@repo/types/results/PaginatedResult.ts";
 import type { Pagination } from "../types/pagination";
 import { GroupsRepository } from "../repositories/groups.repository";
 
-const list = async (pagination: Pagination): Promise<PaginatedResult<Group>> => {
-  const groups = await GroupsRepository.getGroups(pagination);
+const list = async (
+  pagination: Pagination,
+  userId?: string,
+): Promise<PaginatedResult<Group>> => {
+  const groups = await GroupsRepository.getGroups(pagination, userId);
   const total = await GroupsRepository.getGroupCount();
 
   return {
@@ -13,9 +16,8 @@ const list = async (pagination: Pagination): Promise<PaginatedResult<Group>> => 
     nextPage: pagination.page + 1,
     pages: Math.ceil(total / pagination.limit),
   };
-}
+};
 
 export const GroupsService = {
   list,
 };
-
