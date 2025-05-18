@@ -8,10 +8,13 @@ type ResultType = {
   loading: boolean;
 };
 
-export const useHottestCards = (): Result<ResultType, Error> => {
+export const useHottestCards = (limit = 10): Result<ResultType, Error> => {
   const { data, isPending, error } = useQuery<Card[]>({
-    queryKey: ['hottestcards'],
-    queryFn: () => fetch(`${getApiHost()}/cards/hottest`).then((res) => res.json()),
+    queryKey: ["hottestcards"],
+    queryFn: () =>
+      fetch(`${getApiHost()}/cards/hottest?limit=${limit}`).then((res) =>
+        res.json(),
+      ),
   });
 
   if (error) {
@@ -24,4 +27,3 @@ export const useHottestCards = (): Result<ResultType, Error> => {
 
   return Ok({ data, loading: false });
 };
-

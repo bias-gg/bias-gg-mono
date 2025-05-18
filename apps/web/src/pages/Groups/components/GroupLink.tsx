@@ -1,12 +1,30 @@
 import { Image } from "@/components/ui/Image";
 import { Badge } from "@/components/ui/Badge";
 import { Group } from "@repo/types/groups/GroupType.js";
+import { LikeButton } from "@/components/LikeButton";
+import { useState } from "react";
+import { useFollowGroup } from "@/hooks/api/groups/useFollowGroup";
 
 type GroupLinkProps = {
   group: Group;
 };
 
 export const GroupLink = ({ group }: GroupLinkProps) => {
+  const [{ mutate: followMutation }, { mutate: unfollowMutation }] =
+    useFollowGroup();
+
+  const handleLiked = (
+    isLiked: boolean,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    event.preventDefault();
+    if (isLiked) {
+      followMutation({ id: group.id });
+    } else {
+      unfollowMutation({ id: group.id });
+    }
+  };
+
   return (
     <a
       href={`/groups/${group.id}`}
@@ -21,6 +39,7 @@ export const GroupLink = ({ group }: GroupLinkProps) => {
           alt={`${group.name} group`}
           className="block w-full h-full"
         />
+        <LikeButton isLiked={group.liked} onLiked={handleLiked} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{group.name}</h2>
