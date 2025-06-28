@@ -17,22 +17,22 @@ export function Sidebar({ children }: PropsWithChildren) {
   const groups: GroupType[] = [
     {
       name: "BTS",
-      id: hash("BTS" + 1),
+      id: "254",
       favorite: true,
     },
     {
       name: "BLACKPINK",
-      id: hash("BLACKPINK" + 2),
+      id: "253",
       favorite: false,
     },
     {
+      id: "100",
       name: "TWICE",
-      id: hash("TWICE" + 3),
       favorite: false,
     },
     {
       name: "ATEEZ",
-      id: hash("ATEEZ" + 4),
+      id: "222",
       favorite: true,
     },
   ];
@@ -42,7 +42,11 @@ export function Sidebar({ children }: PropsWithChildren) {
       <input id="sidebar" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">{children}</div>
       <div className="drawer-side">
-        <label htmlFor="sidebar" aria-label="Open sidebar" className="drawer-overlay" />
+        <label
+          htmlFor="sidebar"
+          aria-label="Open sidebar"
+          className="drawer-overlay"
+        />
         <ul className="menu bg-base-200 text-base-content min-h-full w-70 p-4 overflow-y-auto">
           <li>
             <Link to="/groups">All groups</Link>
@@ -50,14 +54,12 @@ export function Sidebar({ children }: PropsWithChildren) {
           <li>
             <Link to="/wishlist">Wishlist</Link>
           </li>
-          
+
           <div className="divider" />
 
           {groups.map((group) => (
             <li key={group.id}>
-              <Link to={`/group/${group.id}`}>
-                {group.name}
-              </Link>
+              <Link to={`/groups/${group.id}`}>{group.name}</Link>
             </li>
           ))}
         </ul>
