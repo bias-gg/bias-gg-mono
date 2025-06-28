@@ -28,7 +28,11 @@ export interface BadgeProps
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
-    <button className={cn(badgeVariants({ variant }), className)} {...props} />
+    <button
+      type="button"
+      className={cn(badgeVariants({ variant }), className)}
+      {...props}
+    />
   );
 }
 
