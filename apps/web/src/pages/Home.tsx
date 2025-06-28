@@ -1,5 +1,5 @@
 import { Grid } from "@/components/ui/Grid";
-import { Photocard } from "@/components/Photocard";
+import { Photocard } from "@/components/photocard";
 import {
   StandardLayout,
   StandardLayoutContent,
