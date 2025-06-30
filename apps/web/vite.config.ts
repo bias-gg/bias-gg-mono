@@ -1,7 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { componentTagger } from "lovable-tagger";
-import path from "path";
+import path from "node:path";
 import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/

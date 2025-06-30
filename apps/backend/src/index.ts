@@ -1,10 +1,9 @@
-import { $ } from "bun";
 import { Elysia } from "elysia";
 import { corsMiddleware as cors } from "./middleware/cors";
 import { swaggerMiddleware as swagger } from "./middleware/swagger";
 import { setupRoutes as routes } from "./routes/index";
 
-const app = new Elysia()
+const _app = new Elysia()
 	.use(swagger)
 	.use(cors)
 	.group("/api", (app) => app.use(routes))
