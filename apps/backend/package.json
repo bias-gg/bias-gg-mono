@@ -1,44 +1,38 @@
 {
-  "name": "backend",
-  "version": "0.0.1",
-  "module": "index.ts",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "dev": "docker compose up -d && bun --watch ./src/index.ts",
-    "build": "bun build",
-    "check-types": "tsc --noEmit",
-    "lint": "eslint",
-    "start": "bun index.ts",
-    "db:studio": "npx drizzle-kit studio",
-    "db:migrate": "npx drizzle-kit push",
-    "db:migrate:generate": "npx drizzle-kit generate",
-    "db:migrate:apply": "npx drizzle-kit migrate"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.24.0",
-    "@stylistic/eslint-plugin": "^4.2.0",
-    "@types/bun": "latest",
-    "@types/eslint__js": "^9.14.0",
-    "@types/pg": "^8.11.14",
-    "drizzle-kit": "^0.31.0",
-    "eslint": "^9.24.0",
-    "tsx": "^4.19.4",
-    "typescript-eslint": "^8.30.1"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@elysiajs/cors": "^1.2.0",
-    "@elysiajs/swagger": "^1.2.2",
-    "@repo/types": "*",
-    "dotenv": "^16.5.0",
-    "drizzle-orm": "^0.43.1",
-    "drizzle-seed": "^0.3.1",
-    "elysia": "^1.2.25",
-    "elysia-clerk": "^0.9.9",
-    "pg": "^8.15.6",
-    "uploadthing": "^7.6.0"
-  }
+	"name": "backend",
+	"version": "0.0.1",
+	"module": "index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "docker compose up -d && bun --watch ./src/index.ts",
+		"build": "bun build",
+		"check-types": "tsc --noEmit",
+		"start": "bun index.ts",
+		"db:studio": "npx drizzle-kit studio",
+		"db:migrate": "npx drizzle-kit push",
+		"db:migrate:generate": "npx drizzle-kit generate",
+		"db:migrate:apply": "npx drizzle-kit migrate"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/pg": "^8.11.14",
+		"drizzle-kit": "^0.31.0",
+		"tsx": "^4.19.4"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.2.0",
+		"@elysiajs/swagger": "^1.2.2",
+		"@repo/types": "*",
+		"dotenv": "^16.5.0",
+		"drizzle-orm": "^0.43.1",
+		"drizzle-seed": "^0.3.1",
+		"elysia": "^1.2.25",
+		"elysia-clerk": "^0.9.9",
+		"pg": "^8.15.6",
+		"uploadthing": "^7.6.0"
+	}
 }
