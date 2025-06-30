@@ -8,7 +8,6 @@
 		"dev": "docker compose up -d && bun --watch ./src/index.ts",
 		"build": "bun build",
 		"check-types": "tsc --noEmit",
-		"lint": "eslint",
 		"start": "bun index.ts",
 		"db:studio": "npx drizzle-kit studio",
 		"db:migrate": "npx drizzle-kit push",
@@ -16,15 +15,10 @@
 		"db:migrate:apply": "npx drizzle-kit migrate"
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.24.0",
-		"@stylistic/eslint-plugin": "^4.2.0",
 		"@types/bun": "latest",
-		"@types/eslint__js": "^9.14.0",
 		"@types/pg": "^8.11.14",
 		"drizzle-kit": "^0.31.0",
-		"eslint": "^9.24.0",
-		"tsx": "^4.19.4",
-		"typescript-eslint": "^8.30.1"
+		"tsx": "^4.19.4"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
