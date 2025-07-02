@@ -24,5 +24,5 @@ jobs:
 
             - name: Build
               run: |
-                bun build
+                bun run build
 
