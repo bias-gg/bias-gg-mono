@@ -7,7 +7,7 @@ import {
 import { Search } from "lucide-react";
 import { forwardRef } from "react";
 import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/Input";
+import { Input } from "@/components/ui/input";
 import { SidebarButton } from "./Sidebar/SidebarButton";
 
 export const Header = forwardRef<HTMLDivElement, {}>((_, ref) => {

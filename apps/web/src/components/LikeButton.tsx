@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Heart } from "lucide-react";
 import React, { useEffect } from "react";
 import { useIsUserLoggedIn } from "@/hooks/api/auth/useIsUserLoggedIn";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 
 const likeButtonVariants = cva(
 	"bg-white rounded-full opacity-50 hover:opacity-100",

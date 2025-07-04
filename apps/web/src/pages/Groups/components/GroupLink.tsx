@@ -1,6 +1,6 @@
 import type { Group } from "@repo/types/groups/GroupType.js";
 import { LikeButton } from "@/components/LikeButton";
-import { Badge } from "@/components/ui/Badge";
+import { Badge } from "@/components/ui/badge";
 import { Image } from "@/components/ui/Image";
 import { useFollowGroup } from "@/hooks/api/groups/useFollowGroup";
 

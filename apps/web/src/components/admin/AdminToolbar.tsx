@@ -1,8 +1,8 @@
 import { Eye, EyeClosed, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminContext } from "@/contexts/AdminContext";
-import { Toolbar, ToolbarButton } from "../ui/Toolbar";
 import { TooltipButton } from "../ui/TooltipButton";
+import { Toolbar, ToolbarButton } from "../ui/toolbar";
 
 export const AdminToolbar = (): JSX.Element | null => {
 	const { isAdmin, setShowAdminTools, showAdminTools } = useAdminContext();

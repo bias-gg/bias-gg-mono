@@ -1,8 +1,8 @@
 import { type PropsWithChildren, useRef } from "react";
-import { Header } from "@/components/layout/Header";
+import { Header } from "@/components/layout/header";
 import { cn } from "@/lib/utils";
 import { AdminToolbar } from "../admin/AdminToolbar";
-import { Sidebar } from "../layout/Sidebar/Sidebar";
+import { Sidebar } from "../layout/Sidebar/sidebar";
 
 export const StandardLayout = ({ children }: PropsWithChildren) => {
 	const headerRef = useRef<HTMLDivElement>(null);
