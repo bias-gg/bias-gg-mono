@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { PropsWithChildren } from "react";
-import { Toaster, ToastProvider } from "@/components/ui/Toast";
-import { TooltipProvider } from "@/components/ui/Tooltip";
 import { AdminProvider } from "@/contexts/AdminContext";
+import { Toaster, ToastProvider } from "./ui/Toast";
+import { TooltipProvider } from "./ui/Tooltip";
 
 const queryClient = new QueryClient();
 
