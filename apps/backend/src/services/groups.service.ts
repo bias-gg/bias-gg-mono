@@ -4,20 +4,20 @@ import { GroupsRepository } from "../repositories/groups.repository";
 import type { Pagination } from "../types/pagination";
 
 const list = async (
-	pagination: Pagination,
-	userId?: string,
+  pagination: Pagination,
+  userId?: string,
 ): Promise<PaginatedResult<Group>> => {
-	const groups = await GroupsRepository.getGroups(pagination, userId);
-	const total = await GroupsRepository.getGroupCount();
+  const groups = await GroupsRepository.getGroups(pagination, userId);
+  const total = await GroupsRepository.getGroupCount();
 
-	return {
-		data: groups,
-		total,
-		nextPage: pagination.page + 1,
-		pages: Math.ceil(total / pagination.limit),
-	};
+  return {
+    data: groups,
+    total,
+    nextPage: pagination.page + 1,
+    pages: Math.ceil(total / pagination.limit),
+  };
 };
 
 export const GroupsService = {
-	list,
+  list,
 };

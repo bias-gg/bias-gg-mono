@@ -1,20 +1,20 @@
 {
-	"name": "@repo/types",
-	"version": "0.0.0",
-	"private": true,
-	"exports": {
-		"./*": "./src/*"
-	},
-	"scripts": {
-		"check-types": "tsc --noEmit"
-	},
-	"devDependencies": {
-		"@repo/typescript-config": "*",
-		"@turbo/gen": "^2.5.0",
-		"@types/node": "^22.14.0",
-		"typescript": "5.8.2"
-	},
-	"dependencies": {
-		"zod": "^3.24.3"
-	}
+  "name": "@repo/types",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "@turbo/gen": "^2.5.0",
+    "@types/node": "^22.14.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "zod": "^3.24.3"
+  }
 }

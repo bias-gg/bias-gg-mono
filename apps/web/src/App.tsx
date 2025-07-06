@@ -11,23 +11,23 @@ import Groups from "./pages/Groups";
 import TradeArtist from "./pages/TradeArtist";
 
 const App = () => (
-	<AppProviders>
-		<BrowserRouter>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/collection" element={<Collection />} />
-				<Route path="/wishlist" element={<Wishlist />} />
-				<Route path="/trade" element={<Trade />} />
-				<Route path="/trade/:artistId" element={<TradeArtist />} />
-				<Route path="/groups" element={<Groups />} />
-				<Route path="/groups/:groupId" element={<GroupDetail />} />
+  <AppProviders>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/collection" element={<Collection />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/trade" element={<Trade />} />
+        <Route path="/trade/:artistId" element={<TradeArtist />} />
+        <Route path="/groups" element={<Groups />} />
+        <Route path="/groups/:groupId" element={<GroupDetail />} />
 
-				{/* Admin Routes */}
-				<Route path="/admin" element={<Admin />} />
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-		</BrowserRouter>
-	</AppProviders>
+        {/* Admin Routes */}
+        <Route path="/admin" element={<Admin />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  </AppProviders>
 );
 
 export default App;

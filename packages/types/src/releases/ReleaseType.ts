@@ -6,12 +6,12 @@ export type ReleaseType = "album" | "single";
 export const ReleaseTypes = ["album", "single"] as const;
 
 export const ReleaseSchema = z
-	.object({
-		name: z.string().nonempty(),
-		groupId: z.number().min(0),
-		type: z.enum(ReleaseTypes),
-	})
-	.extend(idSchema)
-	.extend(creatableSchema);
+  .object({
+    name: z.string().nonempty(),
+    groupId: z.number().min(0),
+    type: z.enum(ReleaseTypes),
+  })
+  .extend(idSchema)
+  .extend(creatableSchema);
 
 export type Release = z.infer<typeof ReleaseSchema>;

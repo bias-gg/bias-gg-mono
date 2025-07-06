@@ -1,5 +1,5 @@
 import { Link, type To } from "react-router-dom";
-import { Button, ButtonProps } from "./Button";
+import { Button, type ButtonProps } from "./Button";
 
 type LinkButtonProps = Omit<ButtonProps, "asChild"> & {
   link: To;

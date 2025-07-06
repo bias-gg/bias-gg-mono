@@ -1,27 +1,27 @@
 {
-	"name": "bias-gg-mono",
-	"private": true,
-	"scripts": {
-		"build": "turbo run build",
-		"dev": "turbo run dev",
-		"nuke": "git clean -Xdf",
-		"lint": "biome lint",
-		"lint:fix": "biome check --write",
-		"format": "biome format",
-		"format:fix": "biome check --write",
-		"check-types": "turbo run check-types"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "2.0.6",
-		"turbo": "^2.5.0",
-		"typescript": "5.8.2"
-	},
-	"engines": {
-		"node": ">=18"
-	},
-	"packageManager": "npm@10.8.1",
-	"workspaces": [
-		"apps/*",
-		"packages/*"
-	]
+  "name": "bias-gg-mono",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "nuke": "git clean -Xdf",
+    "lint": "biome lint",
+    "lint:fix": "biome check --write",
+    "format": "biome format",
+    "format:fix": "biome check --write",
+    "check-types": "turbo run check-types"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.0.6",
+    "turbo": "^2.5.0",
+    "typescript": "5.8.2"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "npm@10.8.1",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

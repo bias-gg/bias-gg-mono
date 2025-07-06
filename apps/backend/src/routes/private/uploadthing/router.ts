@@ -12,21 +12,21 @@ import type { User } from "elysia-clerk";
 import { createBuilder, type FileRouter } from "uploadthing/server";
 
 export type AdapterArgs = {
-	req: Request;
-	user: User;
+  req: Request;
+  user: User;
 };
 
 const f = createBuilder<AdapterArgs>({
-	/**
-	 * Log out more information about the error, but don't return it to the client
-	 * @see https://docs.uploadthing.com/errors#error-formatting
-	 */
-	errorFormatter: (err) => {
-		console.log("Error uploading file", err.message);
-		console.log("  - Above error caused by:", err.cause);
+  /**
+   * Log out more information about the error, but don't return it to the client
+   * @see https://docs.uploadthing.com/errors#error-formatting
+   */
+  errorFormatter: (err) => {
+    console.log("Error uploading file", err.message);
+    console.log("  - Above error caused by:", err.cause);
 
-		return { message: err.message };
-	},
+    return { message: err.message };
+  },
 });
 
 /**
@@ -34,29 +34,29 @@ const f = createBuilder<AdapterArgs>({
  * @see https://docs.uploadthing.com/api-reference/server#file-routes
  */
 export const uploadRouter = {
-	artistImage: f(
-		{
-			image: {
-				maxFileSize: "4MB",
-				maxFileCount: 4,
-			},
-		},
-		{
-			awaitServerData: true,
-		},
-	)
-		.middleware(({ user }) => {
-			return {
-				uploadedBy: user.id,
-				uploadedAt: new Date().toUTCString(),
-			};
-		})
-		.onUploadError(({ error }) => {
-			throw error;
-		})
-		.onUploadComplete(({ metadata }) => {
-			return { metadata };
-		}),
+  artistImage: f(
+    {
+      image: {
+        maxFileSize: "4MB",
+        maxFileCount: 4,
+      },
+    },
+    {
+      awaitServerData: true,
+    },
+  )
+    .middleware(({ user }) => {
+      return {
+        uploadedBy: user.id,
+        uploadedAt: new Date().toUTCString(),
+      };
+    })
+    .onUploadError(({ error }) => {
+      throw error;
+    })
+    .onUploadComplete(({ metadata }) => {
+      return { metadata };
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof uploadRouter;
