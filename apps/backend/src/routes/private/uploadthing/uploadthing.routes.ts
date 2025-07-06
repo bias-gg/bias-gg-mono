@@ -5,16 +5,16 @@ import { authMiddleware } from "../../../middleware/auth";
 import { type AdapterArgs, uploadRouter } from "./router";
 
 const requestHandler = makeAdapterHandler<
-	[AdapterArgs["req"], AdapterArgs["user"]],
-	AdapterArgs
+  [AdapterArgs["req"], AdapterArgs["user"]],
+  AdapterArgs
 >(
-	(req, user) => Effect.succeed({ req, user }),
-	(req) => Effect.succeed(req),
-	{ router: uploadRouter },
+  (req, user) => Effect.succeed({ req, user }),
+  (req) => Effect.succeed(req),
+  { router: uploadRouter },
 );
 
 export const uploadthingRoutes = new Elysia({ prefix: "/uploadthing" })
-	// authenticate any uploads made to uploadthing
-	.use(authMiddleware)
-	.get("/", ({ request, user }) => requestHandler(request, user))
-	.post("/", ({ request, user }) => requestHandler(request, user));
+  // authenticate any uploads made to uploadthing
+  .use(authMiddleware)
+  .get("/", ({ request, user }) => requestHandler(request, user))
+  .post("/", ({ request, user }) => requestHandler(request, user));

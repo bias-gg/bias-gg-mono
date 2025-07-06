@@ -1,14 +1,14 @@
 import { Link, type To } from "react-router-dom";
-import { Button, type ButtonProps } from "./button";
+import { Button, type ButtonProps } from "./Button";
 
 type LinkButtonProps = Omit<ButtonProps, "asChild"> & {
-	link: To;
+  link: To;
 };
 
 export const LinkButton = ({ children, ...props }: LinkButtonProps) => {
-	return (
-		<Button asChild={true} {...props}>
-			<Link to={props.link}>{children}</Link>
-		</Button>
-	);
+  return (
+    <Button asChild={true} {...props}>
+      <Link to={props.link}>{children}</Link>
+    </Button>
+  );
 };
