@@ -7,6 +7,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug Secret Access
+        run: |
+          echo "Host: ${{ secrets.SSH_HOST_DEV }}"
+          echo "Username: ${{ secrets.SSH_USERNAME_DEV }}"
+          echo "Key exists: ${{ secrets.SSH_KEY_DEV != '' }}"
+          echo "Passphrase exists: ${{ secrets.SSH_PASSPHRASE != '' }}"
       - name: Deploy to Droplet
         uses: appleboy/ssh-action@master
         with:
