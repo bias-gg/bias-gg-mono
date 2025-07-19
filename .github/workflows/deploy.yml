@@ -1,0 +1,24 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_DEV }}
+          username: ${{ secrets.SSH_USERNAME_DEV }}
+          key: ${{ secrets.SSH_KEY_DEV }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          script: |
+            mkdir -p ~/bias-gg/app
+            cd ~/bias-gg/app
+            git init
+            git remote add origin git@github.com:bias-gg/bias-gg-mono.git
+            git pull origin main
+            # TODO: Build and run bias-gg-mono
+            echo "Deployed!"
