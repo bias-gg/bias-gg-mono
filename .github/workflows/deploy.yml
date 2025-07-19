@@ -20,5 +20,5 @@ jobs:
             git init
             git remote add origin git@github.com:bias-gg/bias-gg-mono.git
             git pull origin main
-            # TODO: Build and run bias-gg-mono
+            # TODO: Build and run
             echo "Deployed!"
